@@ -17,14 +17,14 @@ from the basket and performing currency conversions on the total amount.
 
 **Product Catalog:** The application will offer a selection of goods (priced in
 US dollars) for purchase:
-• **Potato:** $0.95 per bag
-• **Eggs:** $2.10 per dozen
-• **Milk**: $1.30 per bottle
-• **Banana:** $0.73 per kg
+- **Potato:** $0.95 per bag
+- **Eggs:** $2.10 per dozen
+- **Milk**: $1.30 per bottle
+- **Banana:** $0.73 per kg
 
 **Basket Functionality:** Users should be able to:
-• Add or remove items to/from the basket.
-• View the total cost, 
+- Add or remove items to/from the basket.
+- View the total cost, 
 
 **Checkout Feature:** Implement a checkout button that, when clicked,
 displays the total price of items in the basket. Include the ability to show
