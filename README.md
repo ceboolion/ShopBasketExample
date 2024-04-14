@@ -1,6 +1,3 @@
-# HomeAssignment
-Home Assignment Millenium
-
 ## iOS Developer Home Assignment
 
 **Objective:** The goal of this assignment is to evaluate your ability to create
