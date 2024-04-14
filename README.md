@@ -39,3 +39,12 @@ attached a json with example respons that will simulate data from service.
 
 **Code Quality:** Pay close attention to memory management, performance,
 code quality, testability, and maintainability. Your code
+
+### Deliverables:
+Submit a complete set of development artifacts, enabling the app’s review
+and execution in a simulator.
+Commit your project to a GitHub repository. Provide a link to this
+repository for review.
+Ensure the project structure is clear and navigable, with self-explanatory
+filenames and a concise readme detailing setup and operation
+instructions.
