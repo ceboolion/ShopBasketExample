@@ -38,8 +38,8 @@ final class StartCoordinator: NSObject, Coordinator {
     
     private func showProductDetails(with data: ProductModel) {
         let controller = ProductDetailsViewController()
+        controller.setupView(with: data)
         pushController(with: controller)
-        
     }
     
     private func pushController(with controller: UIViewController) {

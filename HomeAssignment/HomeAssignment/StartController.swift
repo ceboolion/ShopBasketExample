@@ -10,7 +10,6 @@ class StartController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .red
         title = "Zakupy"
         navigationController?.navigationBar.prefersLargeTitles = true
         setup()
@@ -38,6 +37,7 @@ class StartController: UIViewController {
     
     private func setupObservers() {
         bindTableViewProducts()
+        bindCurrenciesData()
     }
     
     //MARK: - RX
@@ -58,6 +58,14 @@ class StartController: UIViewController {
             .bind { [weak self] row in
                 guard let data = self?.viewModel.productsData.value[row] else { return }
                 self?.didSendEventClosure?(.showProduct(data))
+            }
+            .disposed(by: viewModel.disposeBag)
+    }
+    
+    func bindCurrenciesData() {
+        viewModel.currenciesData
+            .bind { [weak self] data in
+                print("WRC currenciesData: \(data)")
             }
             .disposed(by: viewModel.disposeBag)
     }

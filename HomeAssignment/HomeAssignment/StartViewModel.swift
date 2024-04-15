@@ -13,6 +13,7 @@ final class StartViewModel {
     
     //MARK: - PUBLIC PROPERTIES
     let productsData: BehaviorRelay<[ProductModel]> = BehaviorRelay(value: [])
+    let currenciesData: BehaviorRelay<[CurrencyModel]> = BehaviorRelay(value: [])
     let disposeBag = DisposeBag()
     
     //MARK: - PRIVATE PROPERTIES
@@ -21,8 +22,39 @@ final class StartViewModel {
     // MARK: INIT
     init() {
         productsData.accept(getProducts())
+        fetchCurrencyData()
+            .subscribe(onNext: { [weak self] currencyData in
+                self?.currenciesData.accept(currencyData.getCurrencyData())
+                // Handle success
+            }, onError: { error in
+                print("Error: \(error)")
+                // Handle error
+            })
+            .disposed(by: disposeBag)
     }
     
+    
+    //MARK: - PUBLIC METHODS
+    func fetchCurrencyData() -> Observable<CurrencyData> {
+        return Observable.create { observer in
+            guard let url = Bundle.main.url(forResource: "response", withExtension: "json") else {
+                observer.onError(NSError(domain: "HomeAssignment", code: 404, userInfo: [NSLocalizedDescriptionKey: "File not found"]))
+                return Disposables.create()
+            }
+            
+            do {
+                let data = try Data(contentsOf: url)
+                let decoder = JSONDecoder()
+                let currencyData = try decoder.decode(CurrencyData.self, from: data)
+                
+                observer.onNext(currencyData)
+                observer.onCompleted()
+            } catch {
+                observer.onError(error)
+            }
+            return Disposables.create()
+        }
+    }
     
     //MARK: - PRIVATE METHODS
     private func getProducts() -> [ProductModel] {

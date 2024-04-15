@@ -44,7 +44,7 @@ class ProductViewCell: UITableViewCell {
         productId = model.id
         configureImageView(with: model.product)
         configureProductTitle(for: model.product)
-        configureProductPriceLabel(for: model.product, price: model.productPrice.description)
+        configureProductPriceLabel(for: model)
         configureProductBuyButton()
         configureStackView()
         setupConstraints()
@@ -68,9 +68,9 @@ class ProductViewCell: UITableViewCell {
         productTitleLabel.textColor = .black
     }
     
-    private func configureProductPriceLabel(for productType: ProductType, price: String) {
+    private func configureProductPriceLabel(for model: ProductModel) {
         productPriceLabel = UILabel()
-        productPriceLabel.text = price
+        productPriceLabel.text = model.productPrice.formatted(.currency(code: "USD")) + model.unitOfMeasure.name
         productPriceLabel.textColor = .black
     }
     

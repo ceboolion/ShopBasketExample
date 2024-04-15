@@ -32,8 +32,6 @@ final class MainCoordinator: NSObject, Coordinator {
     var childCoordinators = [Coordinator]()
     var navigationController: UINavigationController
     var tabBarController: UITabBarController
-    var onShowCoordinator: ((CoordinatorType) -> ())?
-    var onShowReadingTimerFlow: ((CoordinatorType, Bool) -> ())?
     
     //MARK: - INITIALIZERS
     init(_ navigationController: UINavigationController) {
