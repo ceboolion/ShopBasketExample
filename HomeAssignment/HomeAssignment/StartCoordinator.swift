@@ -29,13 +29,21 @@ final class StartCoordinator: NSObject, Coordinator {
         navigationController.pushViewController(controller, animated: true)
         controller.didSendEventClosure = { [weak self] event in
             switch event {
-            case .showProduct:
-                print("WRC showProduct tapped")
+            case .showProduct(let data):
+                print("WRC didSendEventClosure showProduct data: \(data)")
+                self?.showProductDetails(with: data)
             }
         }
     }
     
+    private func showProductDetails(with data: ProductModel) {
+        let controller = ProductDetailsViewController()
+        pushController(with: controller)
+        
+    }
     
-    
+    private func pushController(with controller: UIViewController) {
+        navigationController.pushViewController(controller, animated: true)
+    }
     
 }

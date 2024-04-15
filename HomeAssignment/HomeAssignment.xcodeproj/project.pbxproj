@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0820064C2BCD06E30036364A /* UIStackView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0820064B2BCD06E30036364A /* UIStackView+Ext.swift */; };
+		0820064E2BCD0E430036364A /* UnitsOfMeasure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0820064D2BCD0E430036364A /* UnitsOfMeasure.swift */; };
+		082006502BCD246F0036364A /* ProductDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0820064F2BCD246F0036364A /* ProductDetailsViewController.swift */; };
 		08745B612BCC5AB00054F9CB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08745B602BCC5AB00054F9CB /* AppDelegate.swift */; };
 		08745B652BCC5AB00054F9CB /* StartController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08745B642BCC5AB00054F9CB /* StartController.swift */; };
 		08745B6A2BCC5AB40054F9CB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 08745B692BCC5AB40054F9CB /* Assets.xcassets */; };
@@ -52,6 +55,9 @@
 
 /* Begin PBXFileReference section */
 		05F96C0DEE444F9CBC4689CD /* Pods_HomeAssignmentTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HomeAssignmentTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		0820064B2BCD06E30036364A /* UIStackView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+Ext.swift"; sourceTree = "<group>"; };
+		0820064D2BCD0E430036364A /* UnitsOfMeasure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitsOfMeasure.swift; sourceTree = "<group>"; };
+		0820064F2BCD246F0036364A /* ProductDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailsViewController.swift; sourceTree = "<group>"; };
 		08745B5D2BCC5AB00054F9CB /* HomeAssignment.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HomeAssignment.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		08745B602BCC5AB00054F9CB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		08745B642BCC5AB00054F9CB /* StartController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartController.swift; sourceTree = "<group>"; };
@@ -231,6 +237,7 @@
 				08B528B02BCC6EE60015B713 /* StartViewModel */,
 				08B528AF2BCC6EA80015B713 /* Views */,
 				08745B642BCC5AB00054F9CB /* StartController.swift */,
+				0820064F2BCD246F0036364A /* ProductDetailsViewController.swift */,
 			);
 			name = Start;
 			sourceTree = "<group>";
@@ -257,6 +264,7 @@
 			children = (
 				08B528AD2BCC6B630015B713 /* UITabBarController+Ext.swift */,
 				08B528B62BCC70970015B713 /* UITablveViewCell+Ext.swift */,
+				0820064B2BCD06E30036364A /* UIStackView+Ext.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -288,6 +296,7 @@
 			isa = PBXGroup;
 			children = (
 				08B528B92BCC72E10015B713 /* ProductType.swift */,
+				0820064D2BCD0E430036364A /* UnitsOfMeasure.swift */,
 			);
 			name = Enums;
 			sourceTree = "<group>";
@@ -573,8 +582,11 @@
 				08B5289B2BCC62740015B713 /* Coordinator.swift in Sources */,
 				08B528AB2BCC6AB10015B713 /* MainCoordinator+TabBarCreation.swift in Sources */,
 				08B528A72BCC67420015B713 /* StartCoordinator.swift in Sources */,
+				0820064E2BCD0E430036364A /* UnitsOfMeasure.swift in Sources */,
+				0820064C2BCD06E30036364A /* UIStackView+Ext.swift in Sources */,
 				08B528B52BCC6FFA0015B713 /* ProductViewCell.swift in Sources */,
 				08B5289E2BCC63DA0015B713 /* MainCoordinator.swift in Sources */,
+				082006502BCD246F0036364A /* ProductDetailsViewController.swift in Sources */,
 				08B528AE2BCC6B630015B713 /* UITabBarController+Ext.swift in Sources */,
 				08B528B22BCC6EFA0015B713 /* StartViewModel.swift in Sources */,
 			);

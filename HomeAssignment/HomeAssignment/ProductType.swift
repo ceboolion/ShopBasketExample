@@ -7,7 +7,7 @@
 
 import UIKit
 
-enum ProductType {
+enum ProductType: CaseIterable {
     case milk
     case egg
     case banana

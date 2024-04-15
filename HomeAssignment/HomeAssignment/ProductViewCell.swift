@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import RxSwift
 
 class ProductViewCell: UITableViewCell {
     
@@ -15,12 +16,17 @@ class ProductViewCell: UITableViewCell {
     private var productPriceLabel: UILabel!
     private var productBuyButton: UIButton!
     private var stackView: UIStackView!
+    private var productId: UUID?
     
     private let productImageHeight: CGFloat = 80
+    
+    private let disposeBag = DisposeBag()
 
     // MARK: - INIT
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        accessoryType = .disclosureIndicator
+        selectionStyle = .none
     }
     
     required init?(coder: NSCoder) {
@@ -34,12 +40,15 @@ class ProductViewCell: UITableViewCell {
     }
     
     //MARK: - PUBLIC METHODS
-    func configureCell(with productType: ProductType, productPrice: String) {
-        configureImageView(with: productType)
-        configureProductTitle(for: productType)
-        configureProductPriceLabel(for: productType, price: productPrice)
+    func configureCell(with model: ProductModel) {
+        productId = model.id
+        configureImageView(with: model.product)
+        configureProductTitle(for: model.product)
+        configureProductPriceLabel(for: model.product, price: model.productPrice.description)
+        configureProductBuyButton()
         configureStackView()
         setupConstraints()
+        setupObservers()
     }
     
     //MARK: - PRIVATE METHODS
@@ -56,11 +65,19 @@ class ProductViewCell: UITableViewCell {
     private func configureProductTitle(for productType: ProductType) {
         productTitleLabel = UILabel()
         productTitleLabel.text = productType.productTitle
+        productTitleLabel.textColor = .black
     }
     
     private func configureProductPriceLabel(for productType: ProductType, price: String) {
         productPriceLabel = UILabel()
         productPriceLabel.text = price
+        productPriceLabel.textColor = .black
+    }
+    
+    private func configureProductBuyButton() {
+        productBuyButton = UIButton(type: .system)
+        productBuyButton.setTitle("Kup", for: .normal)
+        productBuyButton.setTitle("Kup", for: .highlighted)
     }
     
     private func configureStackView() {
@@ -68,8 +85,7 @@ class ProductViewCell: UITableViewCell {
         stackView.axis = .vertical
         stackView.alignment = .leading
         stackView.spacing = 5
-        stackView.distribution = .fill
-        
+        stackView.distribution = .fill        
         stackView.addSubviews(views: productTitleLabel, productPriceLabel, productBuyButton)
     }
     
@@ -89,14 +105,21 @@ class ProductViewCell: UITableViewCell {
             $0.height.equalTo(productImageHeight)
         }
     }
+    
+    //MARK: - RX
+    private func setupObservers() {
+        bindBuyButton()
+    }
+    
+    private func bindBuyButton() {
+        productBuyButton
+            .rx
+            .tap
+            .bind { [weak self] in
+                print("WRC productBuyButton tapped")
+            }
+            .disposed(by: disposeBag)
+    }
    
     
-}
-
-extension UIStackView {
-    func addSubviews(views: UIView...) {
-        for view in views {
-            addSubview(view)
-        }
-    }
 }

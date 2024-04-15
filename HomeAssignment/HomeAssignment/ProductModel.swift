@@ -8,7 +8,9 @@
 import Foundation
 
 struct ProductModel {
+    let id = UUID()
     let product: ProductType
-    let productPrice: String
+    let productPrice: Double
     let itemsAvailable: Int
+    let unitOfMeasure: UnitsOfMeasure
 }
