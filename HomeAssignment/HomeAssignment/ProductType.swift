@@ -38,4 +38,18 @@ enum ProductType: CaseIterable {
             return "Najlepsze ziemniaki na świecie"
         }
     }
+    
+    var shortTitle: String {
+        switch self {
+        case .milk:
+            return "MLEKO"
+        case .egg:
+            return "JAJKA"
+        case .banana:
+            return "BANANY"
+        case .potato:
+            return "ZIEMNIAKI"
+        }
+    }
+    
 }

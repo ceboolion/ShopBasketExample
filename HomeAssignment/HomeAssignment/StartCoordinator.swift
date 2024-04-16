@@ -25,25 +25,26 @@ final class StartCoordinator: NSObject, Coordinator {
     }
     
     func start() {
-        let controller = StartController()
+        let controller = StartController(viewModel: StartViewModel(networkingService: NetworkingService()))
         navigationController.pushViewController(controller, animated: true)
         controller.didSendEventClosure = { [weak self] event in
             switch event {
             case .showProduct(let data):
-                print("WRC didSendEventClosure showProduct data: \(data)")
+//                print("WRC didSendEventClosure showProduct data: \(data)")
                 self?.showProductDetails(with: data)
             }
         }
     }
     
     private func showProductDetails(with data: ProductModel) {
-        let controller = ProductDetailsViewController()
-        controller.setupView(with: data)
-        pushController(with: controller)
+        let rootView = ProductDetailView()
+        let controller = ProductDetailsViewController(rootView: rootView, data: data)
+        push(controller)
     }
     
-    private func pushController(with controller: UIViewController) {
+    private func push(_ controller: UIViewController) {
         navigationController.pushViewController(controller, animated: true)
     }
+    
     
 }

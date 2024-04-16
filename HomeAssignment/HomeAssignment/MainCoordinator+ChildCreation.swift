@@ -13,15 +13,10 @@ extension MainCoordinator {
         case .start:
             let coordinator = StartCoordinator(navigationController: UINavigationController())
             coordinator.parentCoordinator = self
-//            coordinator.finishDelegate = finishDelegate
-//            coordinator.onShowTab = { [weak self] tab in
-//                self?.tabBarController.selectScreen(tab)
-//            }
             childCoordinators.append(coordinator)
         case .basket:
             let coordinator = BasketCoordinator(navigationController: UINavigationController())
             coordinator.parentCoordinator = self
-//            coordinator.finishDelegate = finishDelegate
             childCoordinators.append(coordinator)
         }
     }

@@ -3,16 +3,31 @@ import SnapKit
 
 class StartController: UIViewController {
     
-    private var viewModel = StartViewModel()
+    private var viewModel: StartViewModel!
     private var tableView: UITableView!
     
     var didSendEventClosure: ((Event)->Void)?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Zakupy"
-        navigationController?.navigationBar.prefersLargeTitles = true
+        title = "Start"
+        navigationItem.title = "Zrób super zakupy"
+        navigationController?.navigationBar.prefersLargeTitles = false
         setup()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.view.backgroundColor = .systemGray6
+    }
+    
+    init(viewModel: StartViewModel) {
+        super.init(nibName: nil, bundle: nil)
+        self.viewModel = viewModel
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     private func setup() {
@@ -31,7 +46,8 @@ class StartController: UIViewController {
     private func configureConstraints() {
         view.addSubview(tableView)
         tableView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
+            $0.top.equalTo(view.safeAreaLayoutGuide)
+            $0.leading.bottom.trailing.equalToSuperview()
         }
     }
     
@@ -46,8 +62,9 @@ class StartController: UIViewController {
             .bind(to: tableView.rx.items) { [weak self] _, index, model in
                 let indexPath = IndexPath(row: index, section: 0)
                 let cell = self?.tableView.dequeueReusableCell(withIdentifier: ProductViewCell.reuseIdentifier, for: indexPath) as? ProductViewCell
-                cell?.configureCell(with: model)
-                return cell ?? UITableViewCell()
+                guard let cell else { return UITableViewCell() }
+                cell.configureCell(with: model)
+                return cell
             }
             .disposed(by: viewModel.disposeBag)
         
@@ -65,7 +82,7 @@ class StartController: UIViewController {
     func bindCurrenciesData() {
         viewModel.currenciesData
             .bind { [weak self] data in
-                print("WRC currenciesData: \(data)")
+//                print("WRC currenciesData: \(data)")
             }
             .disposed(by: viewModel.disposeBag)
     }
