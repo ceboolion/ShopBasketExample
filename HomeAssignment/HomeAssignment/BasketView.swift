@@ -48,7 +48,12 @@ class BasketView: UIView {
     }
     
     private func configureConstraints() {
+        addSubview(tableView)
         addSubview(emptyBasketView)
+        
+        tableView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
         
         emptyBasketView.snp.makeConstraints {
             $0.edges.equalToSuperview()

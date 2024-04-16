@@ -11,10 +11,11 @@ class ProductViewCell: UITableViewCell {
     private var productAvailabilityNumber: UILabel!
     private var productBuyButton: UIButton!
     private var stackView: UIStackView!
-    private var minusButton: UIButton!
-    private var buyQuantityLabel: UILabel!
-    private var plusButton: UIButton!
+//    private var minusButton: UIButton!
+//    private var buyQuantityLabel: UILabel!
+//    private var plusButton: UIButton!
     private var productQuantityStackView: UIStackView!
+    private var quantityManagementView: QuantityManagementView!
     
     private let productImageHeight: CGFloat = 80
     private let disposeBag = DisposeBag()
@@ -44,9 +45,7 @@ class ProductViewCell: UITableViewCell {
         configureProductPriceLabel(for: model)
         configureProductAvailabilityLabel()
         configureProductBuyButton()
-        configureMinusButton()
-        configureBuyQuantityLabel()
-        configurePlusButton()
+        configureQuantityManagementView()
         configureProductQuantityStackView()
         configureStackView()
         setupConstraints()
@@ -90,23 +89,8 @@ class ProductViewCell: UITableViewCell {
         productBuyButton.setTitle("Kup", for: .highlighted)
     }
     
-    private func configureMinusButton() {
-        minusButton = UIButton(type: .system)
-        minusButton.setImage(UIImage(systemName: "minus"), for: .normal)
-        minusButton.setImage(UIImage(systemName: "minus"), for: .highlighted)
-        minusButton.backgroundColor = .systemBackground
-    }
-    
-    private func configureBuyQuantityLabel() {
-        buyQuantityLabel = UILabel()
-        buyQuantityLabel.text = "0"
-    }
-    
-    private func configurePlusButton() {
-        plusButton = UIButton(type: .system)
-        plusButton.setImage(UIImage(systemName: "plus"), for: .normal)
-        plusButton.setImage(UIImage(systemName: "plus"), for: .highlighted)
-        plusButton.backgroundColor = .systemBackground
+    private func configureQuantityManagementView() {
+        quantityManagementView = QuantityManagementView(productData: productData)
     }
     
     private func configureProductQuantityStackView() {
@@ -114,7 +98,7 @@ class ProductViewCell: UITableViewCell {
         productQuantityStackView.axis = .horizontal
         productQuantityStackView.alignment = .center
         productQuantityStackView.spacing = 6
-        productQuantityStackView.addSubviews(views: productBuyButton, UIView(), minusButton, buyQuantityLabel, plusButton)
+        productQuantityStackView.addSubviews(views: productBuyButton, UIView(), quantityManagementView)
     }
     
     private func configureStackView() {
@@ -135,19 +119,10 @@ class ProductViewCell: UITableViewCell {
             $0.width.height.equalTo(productImageHeight)
         }
         
-        minusButton.snp.makeConstraints {
-            $0.width.height.equalTo(16)
-        }
-        
-        plusButton.snp.makeConstraints {
-            $0.width.height.equalTo(16)
-        }
-        
         stackView.snp.makeConstraints {
             $0.top.equalTo(5)
             $0.leading.equalTo(productImageView.snp.trailing).offset(10)
             $0.bottom.trailing.equalTo(-5)
-            $0.height.equalTo(productImageHeight)
         }
         
         productQuantityStackView.snp.makeConstraints {
@@ -158,8 +133,6 @@ class ProductViewCell: UITableViewCell {
     //MARK: - RX
     private func setupObservers() {
         bindBuyButton()
-        bindMinusButton()
-        bindPlusButton()
         bindNumberOfChosenProducts()
     }
     
@@ -174,38 +147,12 @@ class ProductViewCell: UITableViewCell {
             .disposed(by: disposeBag)
     }
     
-    private func bindMinusButton() {
-        minusButton
-            .rx
-            .tap
-            .bind { [weak self] in
-                print("WRC minusButton tapped in cell")
-                guard let productData = self?.productData else { return }
-                ShoppingBasket.shared.updateProductsBasket(.remove,
-                                                           product: productData.mapProductModel(numberOfChosenProducts: productData.product == .egg ? 12 : 1))
-            }
-            .disposed(by: disposeBag)
-    }
-   
-    private func bindPlusButton() {
-        plusButton
-            .rx
-            .tap
-            .bind { [weak self] in
-                print("WRC plusButton tapped")
-                guard let productData = self?.productData else { return }
-                ShoppingBasket.shared.updateProductsBasket(.add,
-                                                           product: productData.mapProductModel(numberOfChosenProducts: productData.product == .egg ? 12 : 1))
-            }
-            .disposed(by: disposeBag)
-    }
-    
     private func bindNumberOfChosenProducts() {
         ShoppingBasket.shared.basketItems
             .bind { [weak self] data in
                 print("WRC ShoppingBasket data: \(data)")
                 if let productIndex = data.firstIndex(where: {$0.id == self?.productData?.id}) {
-                    self?.buyQuantityLabel.text = "\(Int(data[productIndex].numberOfChosenProducts))"
+//                    self?.buyQuantityLabel.text = "\(Int(data[productIndex].numberOfChosenProducts))"
                     self?.setProductAvailabilityNumber(productsNumber: data[productIndex].numberOfChosenProducts.asInt())
                 }
             }

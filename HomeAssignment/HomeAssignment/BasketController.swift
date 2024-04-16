@@ -20,15 +20,9 @@ class BasketController: UIViewController {
     
     private func setupUI() {
         view.backgroundColor = .systemBackground
-//        configureBasketView()
         configureConstraints()
     }
-    
-    
-//    private func configureBasketView() {
-//        basketView = BasketView(viewModel: BasketViewModel())
-//    }
-    
+
     
     private func configureConstraints() {
         view.addSubview(basketView)
