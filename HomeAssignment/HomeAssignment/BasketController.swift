@@ -44,12 +44,21 @@ class BasketController: UIViewController {
     //MARK: - RX
     private func setupObservers() {
         bindPayButtonEvent()
+        bindEmptyBasketButtonEvent()
     }
     
     private func bindPayButtonEvent() {
         basketView.payButtonEvent
             .bind { [weak self] _ in
                 self?.didSendEventClosure?(.showPayView)
+            }
+            .disposed(by: basketView.viewModel.disposeBag)
+    }
+    
+    private func bindEmptyBasketButtonEvent() {
+        basketView.emptyBasketButtonEvent
+            .bind { [weak self] _ in
+                self?.didSendEventClosure?(.showStartTab)
             }
             .disposed(by: basketView.viewModel.disposeBag)
     }
@@ -60,6 +69,7 @@ class BasketController: UIViewController {
 extension BasketController {
     enum Event {
         case showPayView
+        case showStartTab
     }
 }
 

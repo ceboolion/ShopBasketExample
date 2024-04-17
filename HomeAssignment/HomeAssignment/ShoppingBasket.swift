@@ -4,41 +4,29 @@ import RxCocoa
 
 class ShoppingBasket {
     
+    //MARK: - PUBLIC PROPERTIES
     let basketItems: BehaviorRelay<[BasketProductsModel]> = BehaviorRelay(value: [])
     static let shared = ShoppingBasket()
     
+    // MARK: - INIT
     private init() {}
     
-    func updateProductsBasket(_ type: BasketUpdateType, product: BasketProductsModel) {
-        type == .add ? appendToArray(product: product) : removeFromArray(product: product)
-    }
-    
-    private func appendToArray(product: BasketProductsModel) {
-        var products = basketItems.value
-        if let index = products.firstIndex(where: {$0.id == product.id}) {
-            let indexData = products[index]
-            if indexData.numberOfAvailableProducts > indexData.numberOfChosenProducts.asInt() {
-                products[index].numberOfChosenProducts += product.numberOfChosenProducts
-            }
-        } else {
-            products.append(product)
-        }
+    //MARK: - PUBLIC METHODS
+    func addProduct(products: [BasketProductsModel]) {
         basketItems.accept(products)
+        print("WRC add basketItems: \(basketItems.value.count)")
     }
     
-    private func removeFromArray(product: BasketProductsModel) {
-        var products = basketItems.value
-        guard let index = products.firstIndex(where: {$0.id == product.id}) else { return }
-        let indexData = products[index]
-        if indexData.numberOfChosenProducts > 0 {
-            products[index].numberOfChosenProducts -= product.numberOfChosenProducts
-        } else if indexData.numberOfChosenProducts == 0 {
-            products.remove(at: index)
-        }
+    func removeProduct(products: [BasketProductsModel]) {
         basketItems.accept(products)
         removeProductIfNeeded()
     }
     
+    func deleteBasketProduct(products: [BasketProductsModel]) {
+        basketItems.accept(products)
+    }
+    
+    //MARK: - PRIVATE METHODS
     private func removeProductIfNeeded() {
         var products = basketItems.value
         products.forEach { product in

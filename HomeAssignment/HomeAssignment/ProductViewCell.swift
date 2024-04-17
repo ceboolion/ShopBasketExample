@@ -3,6 +3,8 @@ import RxSwift
 
 class ProductViewCell: UITableViewCell {
     
+    var onTap: ((BasketUpdateType, ProductModel) -> Void)?
+    
     //MARK: - PRIVATE PROPERTIES
     private var productData: ProductModel = .init(product: .none, 
                                                   productPrice: 0,
@@ -50,7 +52,6 @@ class ProductViewCell: UITableViewCell {
         setProductTitleText()
         setProductPriceLabelText()
         setProductAvailabilityLabelText()
-        setQuantityManagementViewData()
     }
     
     //MARK: - PRIVATE METHODS
@@ -98,6 +99,10 @@ class ProductViewCell: UITableViewCell {
     
     private func configureQuantityManagementView() {
         quantityManagementView = .init()
+        quantityManagementView.onButtonTap = { [weak self] updateType in
+            guard let data = self?.productData else { return }
+            self?.onTap?(updateType, data)
+        }
     }
     
     private func configureProductBuyButton() {
@@ -155,12 +160,8 @@ class ProductViewCell: UITableViewCell {
         productPriceLabel.text = productData.productPrice.formatted(.currency(code: "USD")) + productData.unitOfMeasure.name
     }
     
-    private func setProductAvailabilityLabelText() {
-        productAvailabilityNumber.text = getProductAvailabilityNumber(productsNumber: 0)
-    }
-    
-    private func setQuantityManagementViewData() {
-        quantityManagementView.setupData(with: productData)
+    private func setProductAvailabilityLabelText(quantity: Int = 0) {
+        productAvailabilityNumber.text = getProductAvailabilityNumber(productsNumber: quantity)
     }
     
     //MARK: - RX
@@ -182,20 +183,26 @@ class ProductViewCell: UITableViewCell {
     private func bindNumberOfChosenProducts() {
         ShoppingBasket.shared.basketItems
             .bind { [weak self] data in
-                print("WRC ShoppingBasket data: \(data)")
                 if let productIndex = data.firstIndex(where: {$0.id == self?.productData.id}) {
-                    self?.setProductAvailabilityNumber(productsNumber: data[productIndex].numberOfChosenProducts.asInt())
+                    self?.setProductAvailabilityLabelText(quantity: data[productIndex].numberOfChosenProducts.asInt())
+                    self?.quantityManagementView.setupData(with: data[productIndex])
+                } else {
+                    self?.resetData()
                 }
             }
             .disposed(by: disposeBag)
     }
     
-    private func setProductAvailabilityNumber(productsNumber: Int) {
-        productAvailabilityNumber.text = getProductAvailabilityNumber(productsNumber: productsNumber)
+    private func resetData() {
+        setProductAvailabilityLabelText(quantity: 0)
+        quantityManagementView.setupData(with: productData.mapProductModel(numberOfChosenProducts: 0))
     }
     
     private func getProductAvailabilityNumber(productsNumber: Int) -> String {
         let availabilityNumber = productData.itemsAvailable - productsNumber
-        return "Dostępne: \(availabilityNumber)"
+        let additionalText = productData.product == .egg ? " opak." : ""
+        return "Dostępne: \(availabilityNumber)" + additionalText
     }
+    
+
 }

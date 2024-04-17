@@ -18,7 +18,7 @@ final class StartCoordinator: NSObject, Coordinator {
     }
     
     func start() {
-        let controller = StartController(viewModel: StartViewModel(networkingService: NetworkingService()))
+        let controller = StartController(viewModel: StartViewModel())
         navigationController.pushViewController(controller, animated: true)
         controller.didSendEventClosure = { [weak self] event in
             switch event {

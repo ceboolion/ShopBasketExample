@@ -5,11 +5,15 @@ import RxCocoa
 
 class EmptyBasketView: UIView {
     
+    //MARK: - PUBLIC PROPERTIES
+    var onTapClosure: (() -> Void)?
+    
+    //MARK: - PRIVATE PROPERTIES
     private var emptyBasketButton: UIButton!
     private var textLabel: UILabel!
     private var messageLabel: UILabel!
-    
     private let disposeBag = DisposeBag()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupUI()
@@ -80,6 +84,7 @@ class EmptyBasketView: UIView {
             .tap
             .bind { [weak self] in
                 print("WRC emptyBasketButton tapped")
+                self?.onTapClosure?()
             }
             .disposed(by: disposeBag)
     }

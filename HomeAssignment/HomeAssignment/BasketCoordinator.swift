@@ -26,11 +26,13 @@ final class BasketCoordinator: NSObject, Coordinator {
     
     //MARK: - PUBLIC METHODS
     func start() {
-        let controller = BasketController(basketView: BasketView(viewModel: BasketViewModel()))
+        let controller = BasketController(basketView: BasketView(viewModel: BasketViewModel(networkingService: NetworkingService())))
         controller.didSendEventClosure = { [weak self] event in
             switch event {
             case .showPayView:
                 self?.showPayView()
+            case .showStartTab:
+                self?.showStartTab()
             }
         }
         navigationController.pushViewController(controller, animated: true)
@@ -43,6 +45,10 @@ final class BasketCoordinator: NSObject, Coordinator {
         navigationController.pushViewController(controller, animated: true)
     }
     
+    private func showStartTab() {
+        (parentCoordinator as? MainCoordinator)?.tabBarController.selectScreen(.start)
+    }
+    
     //MARK: - RX
     private func setupObservables() {
         bindBasketItems()
@@ -51,9 +57,7 @@ final class BasketCoordinator: NSObject, Coordinator {
     private func bindBasketItems() {
         ShoppingBasket.shared.basketItems
             .bind { [weak self] basketData in
-                basketData.forEach { print("WRC numberOfAvailableProducts: \($0.numberOfAvailableProducts), numberOfChosenProducts: \($0.numberOfChosenProducts)")}
                 let productsInBasket = Int(basketData.reduce(0) { $0 + $1.numberOfChosenProducts })
-                
                 if productsInBasket > 0 {
                     self?.navigationController.tabBarItem.badgeValue = "\(Int(basketData.reduce(0) { $0 + $1.numberOfChosenProducts }))"
                 } else {
@@ -61,7 +65,6 @@ final class BasketCoordinator: NSObject, Coordinator {
                 }
             }
             .disposed(by: disposeBag)
-        
     }
     
     

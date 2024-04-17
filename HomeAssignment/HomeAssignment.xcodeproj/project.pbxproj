@@ -17,6 +17,8 @@
 		084104E12BCFE50100753ECE /* BasketSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 084104E02BCFE50100753ECE /* BasketSummaryView.swift */; };
 		084104E52BCFE72C00753ECE /* BasketSummaryRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 084104E42BCFE72C00753ECE /* BasketSummaryRowView.swift */; };
 		084104E82BCFEA2000753ECE /* BasketRowViewType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 084104E72BCFEA2000753ECE /* BasketRowViewType.swift */; };
+		084104EA2BD0037300753ECE /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 084104E92BD0037300753ECE /* CustomButton.swift */; };
+		084104F02BD040BA00753ECE /* BasketManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 084104EF2BD040BA00753ECE /* BasketManager.swift */; };
 		084738802BCEA3570018C162 /* BasketViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0847387F2BCEA3570018C162 /* BasketViewModel.swift */; };
 		084738822BCEA56D0018C162 /* EmptyBasketView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 084738812BCEA56D0018C162 /* EmptyBasketView.swift */; };
 		08745B612BCC5AB00054F9CB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08745B602BCC5AB00054F9CB /* AppDelegate.swift */; };
@@ -80,6 +82,8 @@
 		084104E02BCFE50100753ECE /* BasketSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasketSummaryView.swift; sourceTree = "<group>"; };
 		084104E42BCFE72C00753ECE /* BasketSummaryRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasketSummaryRowView.swift; sourceTree = "<group>"; };
 		084104E72BCFEA2000753ECE /* BasketRowViewType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasketRowViewType.swift; sourceTree = "<group>"; };
+		084104E92BD0037300753ECE /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
+		084104EF2BD040BA00753ECE /* BasketManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasketManager.swift; sourceTree = "<group>"; };
 		0847387F2BCEA3570018C162 /* BasketViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasketViewModel.swift; sourceTree = "<group>"; };
 		084738812BCEA56D0018C162 /* EmptyBasketView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyBasketView.swift; sourceTree = "<group>"; };
 		08745B5D2BCC5AB00054F9CB /* HomeAssignment.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HomeAssignment.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -217,6 +221,14 @@
 			name = Enums;
 			sourceTree = "<group>";
 		};
+		084104EE2BD0404100753ECE /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				084104EF2BD040BA00753ECE /* BasketManager.swift */,
+			);
+			name = Managers;
+			sourceTree = "<group>";
+		};
 		0847387E2BCEA3480018C162 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
@@ -250,6 +262,7 @@
 		08745B5F2BCC5AB00054F9CB /* HomeAssignment */ = {
 			isa = PBXGroup;
 			children = (
+				084104EE2BD0404100753ECE /* Managers */,
 				08B528982BCC62510015B713 /* Coordinator */,
 				08B528AC2BCC6B4A0015B713 /* Extensions */,
 				0829665B2BCD3BE500719038 /* Networking */,
@@ -301,6 +314,7 @@
 			isa = PBXGroup;
 			children = (
 				088E0B8C2BCEEDA60013D7A0 /* QuantityManagementView.swift */,
+				084104E92BD0037300753ECE /* CustomButton.swift */,
 			);
 			name = CustomViews;
 			sourceTree = "<group>";
@@ -407,10 +421,10 @@
 		08B528A22BCC66C80015B713 /* Basket */ = {
 			isa = PBXGroup;
 			children = (
-				08B528A32BCC66ED0015B713 /* BasketController.swift */,
 				08A5898D2BCDAC7E0046CB40 /* Cells */,
 				0847387E2BCEA3480018C162 /* ViewModel */,
 				08B4D8652BCE59AB00A6B1D0 /* Views */,
+				08B528A32BCC66ED0015B713 /* BasketController.swift */,
 			);
 			name = Basket;
 			sourceTree = "<group>";
@@ -743,6 +757,8 @@
 				08A5898F2BCDAC980046CB40 /* BasketTableViewCell.swift in Sources */,
 				082966602BCD3EC300719038 /* ProductDetailView.swift in Sources */,
 				08B528BA2BCC72E10015B713 /* ProductType.swift in Sources */,
+				084104F02BD040BA00753ECE /* BasketManager.swift in Sources */,
+				084104EA2BD0037300753ECE /* CustomButton.swift in Sources */,
 				08B4D8702BCE9A7700A6B1D0 /* BasketUpdateType.swift in Sources */,
 				08745B612BCC5AB00054F9CB /* AppDelegate.swift in Sources */,
 				08B528A92BCC674E0015B713 /* BasketCoordinator.swift in Sources */,

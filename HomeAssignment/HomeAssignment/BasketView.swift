@@ -1,10 +1,3 @@
-//
-//  BasketView.swift
-//  HomeAssignment
-//
-//  Created by Ceboolion on 16/04/2024.
-//
-
 import UIKit
 import RxSwift
 
@@ -19,6 +12,7 @@ class BasketView: UIView {
     
     //MARK: - PUBLIC PROPERTIES
     let payButtonEvent = PublishSubject<Bool>()
+    let emptyBasketButtonEvent = PublishSubject<Bool>()
     
     // MARK: - INIT
     init(viewModel: BasketViewModel) {
@@ -55,6 +49,7 @@ class BasketView: UIView {
         tableView = UITableView()
         tableView.estimatedRowHeight = 50
         tableView.rowHeight = UITableView.automaticDimension
+        tableView.showsVerticalScrollIndicator = false
         tableView.register(BasketTableViewCell.self, forCellReuseIdentifier: BasketTableViewCell.reuseIdentifier)
     }
     
@@ -64,6 +59,9 @@ class BasketView: UIView {
     
     private func configureEmptyBasketView() {
         emptyBasketView = EmptyBasketView()
+        emptyBasketView.onTapClosure = { [weak self] in
+            self?.emptyBasketButtonEvent.onNext(true)
+        }
     }
     
     private func configurePayButton() {
@@ -92,7 +90,7 @@ class BasketView: UIView {
         }
         
         payButton.snp.makeConstraints {
-            $0.top.equalTo(basketSummaryView.snp.bottom)
+            $0.top.equalTo(basketSummaryView.snp.bottom).offset(15)
             $0.bottom.equalTo(self.snp.bottom).offset(-10)
             $0.centerX.equalTo(basketSummaryView.snp.centerX)
             $0.height.equalTo(40)
@@ -122,18 +120,25 @@ class BasketView: UIView {
     }
     
     private func bindTableViewData() {
-        ShoppingBasket.shared.basketItems
-            .bind(to: tableView.rx.items(cellIdentifier: BasketTableViewCell.reuseIdentifier, 
+        viewModel.basketData
+            .bind(to: tableView.rx.items(cellIdentifier: BasketTableViewCell.reuseIdentifier,
                                          cellType: BasketTableViewCell.self)) { cellIndex, cellData, cell in
                 cell.configureCell(with: cellData)
+                cell.onTap = { [weak self] updateType, data in
+                    self?.viewModel.updateShoppingData(updateType: updateType, data: data)
+                }
             }
             .disposed(by: viewModel.disposeBag)
         
-//        viewModel.basketData
-//            .bind(to: tableView.rx.items(cellIdentifier: BasketTableViewCell.reuseIdentifier, cellType: BasketTableViewCell.self)) { cellIndex, cellData, cell in
-//                cell.configureCell(with: cellData)
-//            }
-//            .disposed(by: viewModel.disposeBag)
+        tableView
+            .rx
+            .itemDeleted
+            .map(\.row)
+            .bind { [weak self] row in
+                print("WRC row: \(row)")
+                self?.viewModel.removeItem(for: row)
+            }
+            .disposed(by: viewModel.disposeBag)
     }
     
     private func bindPayButton() {

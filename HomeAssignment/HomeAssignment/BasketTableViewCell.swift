@@ -4,6 +4,8 @@ import RxSwift
 
 class BasketTableViewCell: UITableViewCell {
     
+    var onTap: ((BasketUpdateType, ProductModel) -> Void)?
+    
     //MARK: - PRIVATE PROPERTIES
     private var productData: ProductModel = .init(product: .none, 
                                                   productPrice: 0,
@@ -86,6 +88,10 @@ class BasketTableViewCell: UITableViewCell {
     
     private func configureQuantityManagementView() {
         quantityManagementView = .init()
+        quantityManagementView.onButtonTap = { [weak self] updateType in
+            guard let model = self?.productData else { return }
+            self?.onTap?(updateType, model)
+        }
     }
     
     private func updateUI() {
@@ -107,7 +113,7 @@ class BasketTableViewCell: UITableViewCell {
     
     private func setQuantityManagementViewData() {
         guard let basketData else { return }
-        quantityManagementView.setupData(with: basketData.getProductModel())
+        quantityManagementView.setupData(with: basketData)
     }
     
     private func configureBottomStackView() {

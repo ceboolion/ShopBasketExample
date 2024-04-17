@@ -15,12 +15,7 @@ class StartController: UIViewController {
         navigationController?.navigationBar.prefersLargeTitles = false
         setup()
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        navigationController?.navigationBar.barTintColor = .systemGray6
-    }
-    
+
     init(viewModel: StartViewModel) {
         super.init(nibName: nil, bundle: nil)
         self.viewModel = viewModel
@@ -40,6 +35,7 @@ class StartController: UIViewController {
         tableView = UITableView()
         tableView.estimatedRowHeight = 80
         tableView.rowHeight = UITableView.automaticDimension
+        tableView.showsVerticalScrollIndicator = false
         tableView.register(ProductViewCell.self, forCellReuseIdentifier: ProductViewCell.reuseIdentifier)
     }
     
@@ -53,32 +49,28 @@ class StartController: UIViewController {
     
     private func setupObservers() {
         bindTableViewProducts()
-        bindCurrenciesData()
     }
     
     //MARK: - RX
-    func bindTableViewProducts() {
+    private func bindTableViewProducts() {
         viewModel.productsData
-            .bind(to: tableView.rx.items(cellIdentifier: ProductViewCell.reuseIdentifier, cellType: ProductViewCell.self)) { cellIndex, cellData, cell in
+            .bind(to: tableView.rx.items(cellIdentifier: ProductViewCell.reuseIdentifier, 
+                                         cellType: ProductViewCell.self)) { [weak self] cellIndex, cellData, cell in
+                guard let self else { return }
                 cell.configureCell(with: cellData)
+                cell.onTap = { updateType, data in
+                    self.viewModel.updateShoppingData(updateType: updateType, data: data)
+                }
             }
             .disposed(by: viewModel.disposeBag)
         
         tableView
             .rx
             .itemSelected
-            .map(\.row)
+            .map(\.item)
             .bind { [weak self] row in
                 guard let data = self?.viewModel.productsData.value[row] else { return }
                 self?.didSendEventClosure?(.showProduct(data))
-            }
-            .disposed(by: viewModel.disposeBag)
-    }
-    
-    func bindCurrenciesData() {
-        viewModel.currenciesData
-            .bind { [weak self] data in
-//                print("WRC currenciesData: \(data)")
             }
             .disposed(by: viewModel.disposeBag)
     }

@@ -2,15 +2,24 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-final class BasketViewModel {
+final class BasketViewModel: BasketManager {
     
+    //MARK: - PUBLIC PROPERTIES
     let basketData: BehaviorRelay<[BasketProductsModel]> = BehaviorRelay(value: [])
-    let disposeBag = DisposeBag()
+    var currencyData: CurrencyData?
     
-    init() {
+    //MARK: - PRIVATE PROPERTIES
+    private var networkingService: NetworkingService?
+    
+    // MARK: - INIT
+    init(networkingService: NetworkingService) {
+        self.networkingService = networkingService
+        super.init()
         getBasketData()
+        getCurrenciesData()
     }
     
+    //MARK: - PRIVATE METHODS
     private func getBasketData() {
         ShoppingBasket.shared.basketItems
             .bind { [weak self] data in
@@ -18,5 +27,16 @@ final class BasketViewModel {
             }
             .disposed(by: disposeBag)
     }
+    
+    private func getCurrenciesData() {
+        networkingService?.fetchCurrencyData()
+            .subscribe(onNext: { [weak self] data in
+                self?.currencyData = data
+            }, onError: { error in
+                print("Error: \(error)")
+            })
+            .disposed(by: disposeBag)
+    }
+    
     
 }

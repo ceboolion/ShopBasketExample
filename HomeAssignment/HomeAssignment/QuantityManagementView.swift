@@ -5,11 +5,14 @@ import RxSwift
 
 class QuantityManagementView: UIView {
     
+    var onButtonTap: ((BasketUpdateType) -> Void)?
+    
     //MARK: - PRIVATE PROPERTIES
-    private var productData: ProductModel?
-    private var minusButton: UIButton!
+//    private var productData: ProductModel?
+    private var productData: BasketProductsModel?
+    private var minusButton: CustomButton!
     private(set) var buyQuantityLabel: UILabel!
-    private var plusButton: UIButton!
+    private var plusButton: CustomButton!
     private var stackView: UIStackView!
     private let disposeBag = DisposeBag()
     
@@ -25,7 +28,6 @@ class QuantityManagementView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupUI()
-        setupObservers()
     }
     
     
@@ -34,10 +36,19 @@ class QuantityManagementView: UIView {
     }
     
     //MARK: - PUBLIC METHODS
-    func setupData(with data: ProductModel) {
+//    func setupData(with data: ProductModel) {
+//        productData = data
+//        setBuyQuantityLabelText(with: data)
+//    }
+    func setupData(with data: BasketProductsModel) {
         productData = data
+        setBuyQuantityLabelText(with: data)
     }
     
+    func setBuyQuantityLabelText(with data: BasketProductsModel) {
+        buyQuantityLabel.text = "\(Int(data.numberOfChosenProducts))"
+    }
+     
     //MARK: - PRIVATE METHODS
     private func setupUI() {
         configureMinusButton()
@@ -48,10 +59,13 @@ class QuantityManagementView: UIView {
     }
     
     private func configureMinusButton() {
-        minusButton = UIButton(type: .system)
+        minusButton = .init()
         minusButton.setImage(UIImage(systemName: "minus"), for: .normal)
         minusButton.setImage(UIImage(systemName: "minus"), for: .highlighted)
         minusButton.backgroundColor = .systemBackground
+        minusButton.onTap = { [weak self] in
+            self?.onButtonTap?(.remove)
+        }
     }
     
     private func configureBuyQuantityLabel() {
@@ -60,10 +74,13 @@ class QuantityManagementView: UIView {
     }
     
     private func configurePlusButton() {
-        plusButton = UIButton(type: .system)
+        plusButton = .init()
         plusButton.setImage(UIImage(systemName: "plus"), for: .normal)
         plusButton.setImage(UIImage(systemName: "plus"), for: .highlighted)
         plusButton.backgroundColor = .systemBackground
+        plusButton.onTap = { [weak self] in
+            self?.onButtonTap?(.add)
+        }
     }
     
     private func configureStackView() {
@@ -88,49 +105,6 @@ class QuantityManagementView: UIView {
             $0.width.height.equalTo(16)
         }
     }
-    
-    //MARK: - RX
-    private func setupObservers() {
-        bindMinusButton()
-        bindNumberOfChosenProducts()
-        bindPlusButton()
-    }
-    
-    private func bindMinusButton() {
-        minusButton
-            .rx
-            .tap
-            .bind { [weak self] in
-                print("WRC minusButton tapped in cell")
-                guard let productData = self?.productData else { return }
-                ShoppingBasket.shared.updateProductsBasket(.remove,
-                                                           product: productData.mapProductModel(numberOfChosenProducts: productData.product == .egg ? 12 : 1))
-            }
-            .disposed(by: disposeBag)
-    }
-    
-    private func bindNumberOfChosenProducts() {
-        ShoppingBasket.shared.basketItems
-            .bind { [weak self] data in
-                print("WRC ShoppingBasket data: \(data)")
-                if let productIndex = data.firstIndex(where: {$0.id == self?.productData?.id}) {
-                    self?.buyQuantityLabel.text = "\(Int(data[productIndex].numberOfChosenProducts))"
-                }
-            }
-            .disposed(by: disposeBag)
-    }
-    
-    private func bindPlusButton() {
-        plusButton
-            .rx
-            .tap
-            .bind { [weak self] in
-                print("WRC plusButton tapped")
-                guard let productData = self?.productData else { return }
-                ShoppingBasket.shared.updateProductsBasket(.add,
-                                                           product: productData.mapProductModel(numberOfChosenProducts: productData.product == .egg ? 12 : 1))
-            }
-            .disposed(by: disposeBag)
-    }
+
     
 }
