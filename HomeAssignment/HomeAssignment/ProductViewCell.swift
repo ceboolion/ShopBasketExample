@@ -4,7 +4,10 @@ import RxSwift
 class ProductViewCell: UITableViewCell {
     
     //MARK: - PRIVATE PROPERTIES
-    private var productData: ProductModel = .init(product: .none, productPrice: 0, itemsAvailable: 0, unitOfMeasure: .none)
+    private var productData: ProductModel = .init(product: .none, 
+                                                  productPrice: 0,
+                                                  itemsAvailable: 0,
+                                                  unitOfMeasure: .none)
     private var productImageView: UIImageView!
     private var productTitleLabel: UILabel!
     private var productPriceLabel: UILabel!
@@ -71,6 +74,8 @@ class ProductViewCell: UITableViewCell {
     
     private func configureProductImageView() {
         productImageView = .init()
+        productImageView.contentMode = .scaleAspectFit
+        productImageView.backgroundColor = .white
     }
     
     private func configureProductTitleLabel() {
@@ -83,6 +88,7 @@ class ProductViewCell: UITableViewCell {
         productPriceLabel = .init()
         productPriceLabel.font = .systemFont(ofSize: 14, weight: .regular)
         productTitleLabel.minimumScaleFactor = 0.6
+        productTitleLabel.adjustsFontSizeToFitWidth = true
     }
     
     private func configureProductAvailabilityNumber() {
@@ -101,7 +107,7 @@ class ProductViewCell: UITableViewCell {
     }
     
     private func configureProductQuantityStackView() {
-        productQuantityStackView = UIStackView()
+        productQuantityStackView = .init()
         productQuantityStackView.axis = .horizontal
         productQuantityStackView.alignment = .center
         productQuantityStackView.spacing = 6
@@ -109,7 +115,7 @@ class ProductViewCell: UITableViewCell {
     }
     
     private func configureStackView() {
-        stackView = UIStackView()
+        stackView = .init()
         stackView.axis = .vertical
         stackView.alignment = .leading
         stackView.spacing = 5
@@ -122,14 +128,14 @@ class ProductViewCell: UITableViewCell {
         contentView.addSubview(stackView)
         
         productImageView.snp.makeConstraints {
-            $0.top.leading.equalTo(5)
+            $0.top.leading.equalTo(16)
             $0.width.height.equalTo(productImageHeight)
         }
         
         stackView.snp.makeConstraints {
-            $0.top.equalTo(5)
+            $0.top.equalTo(16)
             $0.leading.equalTo(productImageView.snp.trailing).offset(10)
-            $0.bottom.trailing.equalTo(-5)
+            $0.bottom.trailing.equalTo(-8)
         }
         
         productQuantityStackView.snp.makeConstraints {

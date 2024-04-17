@@ -23,6 +23,8 @@ class BasketController: UIViewController {
     //MARK: - LIFECYCLE
     override func viewDidLoad() {
         super.viewDidLoad()
+        title = "Koszyk"
+        navigationItem.title = "Twój koszyk"
     }
     
     //MARK: - PRIVATE METHODS

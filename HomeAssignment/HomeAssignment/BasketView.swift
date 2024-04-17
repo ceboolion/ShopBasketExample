@@ -13,8 +13,8 @@ class BasketView: UIView {
     //MARK: - PRIVATE PROPERTIES
     private(set) var tableView: UITableView!
     private var emptyBasketView: EmptyBasketView!
+    private var basketSummaryView: BasketSummaryView!
     private var payButton: UIButton!
-    
     private(set) var viewModel: BasketViewModel!
     
     //MARK: - PUBLIC PROPERTIES
@@ -45,6 +45,7 @@ class BasketView: UIView {
     //MARK: - PRIVATE METHODS
     private func setupUI() {
         configureTableView()
+        configureBasketSummaryView()
         configureEmptyBasketView()
         configurePayButton()
         configureConstraints()
@@ -55,6 +56,10 @@ class BasketView: UIView {
         tableView.estimatedRowHeight = 50
         tableView.rowHeight = UITableView.automaticDimension
         tableView.register(BasketTableViewCell.self, forCellReuseIdentifier: BasketTableViewCell.reuseIdentifier)
+    }
+    
+    private func configureBasketSummaryView() {
+        basketSummaryView = .init()
     }
     
     private func configureEmptyBasketView() {
@@ -72,6 +77,7 @@ class BasketView: UIView {
     
     private func configureConstraints() {
         addSubview(tableView)
+        addSubview(basketSummaryView)
         addSubview(payButton)
         addSubview(emptyBasketView)
         
@@ -79,12 +85,18 @@ class BasketView: UIView {
             $0.top.leading.trailing.equalToSuperview()
         }
         
-        payButton.snp.makeConstraints {
+        basketSummaryView.snp.makeConstraints {
             $0.top.equalTo(tableView.snp.bottom)
+            $0.leading.equalTo(5)
+            $0.trailing.equalTo(-5)
+        }
+        
+        payButton.snp.makeConstraints {
+            $0.top.equalTo(basketSummaryView.snp.bottom)
             $0.bottom.equalTo(self.snp.bottom).offset(-10)
-            $0.centerX.equalTo(tableView.snp.centerX)
+            $0.centerX.equalTo(basketSummaryView.snp.centerX)
             $0.height.equalTo(40)
-            $0.width.equalTo(200)
+            $0.width.equalTo(UIScreen.main.bounds.width * 0.6)
         }
         
         emptyBasketView.snp.makeConstraints {
@@ -103,17 +115,25 @@ class BasketView: UIView {
         viewModel.basketData
             .bind { [weak self] data in
                 self?.emptyBasketView.isHidden = data.isEmpty ? false : true
+                self?.basketSummaryView.isHidden = data.isEmpty ? true : false
                 self?.payButton.isHidden = data.isEmpty ? true : false
             }
             .disposed(by: viewModel.disposeBag)
     }
     
     private func bindTableViewData() {
-        viewModel.basketData
-            .bind(to: tableView.rx.items(cellIdentifier: BasketTableViewCell.reuseIdentifier, cellType: BasketTableViewCell.self)) { cellIndex, cellData, cell in
+        ShoppingBasket.shared.basketItems
+            .bind(to: tableView.rx.items(cellIdentifier: BasketTableViewCell.reuseIdentifier, 
+                                         cellType: BasketTableViewCell.self)) { cellIndex, cellData, cell in
                 cell.configureCell(with: cellData)
             }
             .disposed(by: viewModel.disposeBag)
+        
+//        viewModel.basketData
+//            .bind(to: tableView.rx.items(cellIdentifier: BasketTableViewCell.reuseIdentifier, cellType: BasketTableViewCell.self)) { cellIndex, cellData, cell in
+//                cell.configureCell(with: cellData)
+//            }
+//            .disposed(by: viewModel.disposeBag)
     }
     
     private func bindPayButton() {

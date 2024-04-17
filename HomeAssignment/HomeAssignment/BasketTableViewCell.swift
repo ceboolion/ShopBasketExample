@@ -5,7 +5,10 @@ import RxSwift
 class BasketTableViewCell: UITableViewCell {
     
     //MARK: - PRIVATE PROPERTIES
-    private var productData: ProductModel = .init(product: .none, productPrice: 0, itemsAvailable: 0, unitOfMeasure: .none)
+    private var productData: ProductModel = .init(product: .none, 
+                                                  productPrice: 0,
+                                                  itemsAvailable: 0,
+                                                  unitOfMeasure: .none)
     private var basketData: BasketProductsModel?
     private var productImageView: UIImageView!
     private var productTitleLabel: UILabel!
@@ -91,19 +94,20 @@ class BasketTableViewCell: UITableViewCell {
     }
     
     private func setProductImageViewImage() {
-        productImageView.image = UIImage(resource: productData.product.image)
+        productImageView.image = UIImage(resource: basketData?.product.image ?? .placeholder)
     }
     
     private func setProductTitleLabelText() {
-        productTitleLabel.text = productData.product.productTitle
+        productTitleLabel.text = basketData?.product.productTitle ?? ""
     }
     
     private func setProductNumberLabelText() {
-        productNumberLabel.text = (basketData?.numberOfChosenProducts.asInt().description ?? "") + " x " + productData.productPrice.formatted(.currency(code: "USD"))
+        productNumberLabel.text = (basketData?.numberOfChosenProducts.asInt().description ?? "") + " x " + (basketData?.productPrice.formatted(.currency(code: "USD")) ?? "")
     }
     
     private func setQuantityManagementViewData() {
-        quantityManagementView.setupData(with: productData)
+        guard let basketData else { return }
+        quantityManagementView.setupData(with: basketData.getProductModel())
     }
     
     private func configureBottomStackView() {
@@ -147,4 +151,3 @@ class BasketTableViewCell: UITableViewCell {
 
 // TODO
 // skrolowanie listy tylko gdy za dużo elementów
-// doro
