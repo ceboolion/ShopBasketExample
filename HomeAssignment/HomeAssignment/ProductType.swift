@@ -12,6 +12,7 @@ enum ProductType: CaseIterable {
     case egg
     case banana
     case potato
+    case none
     
     var image: ImageResource {
         switch self {
@@ -23,6 +24,8 @@ enum ProductType: CaseIterable {
             return .bananas
         case .potato:
             return .potatos
+        case .none:
+            return .placeholder
         }
     }
     
@@ -36,6 +39,8 @@ enum ProductType: CaseIterable {
             return "Najlepsze banany na świecie"
         case .potato:
             return "Najlepsze ziemniaki na świecie"
+        case .none:
+            return " - "
         }
     }
     
@@ -49,6 +54,8 @@ enum ProductType: CaseIterable {
             return "BANANY"
         case .potato:
             return "ZIEMNIAKI"
+        case .none:
+            return " - "
         }
     }
     

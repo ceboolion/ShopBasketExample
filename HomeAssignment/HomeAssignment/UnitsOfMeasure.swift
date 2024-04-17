@@ -8,7 +8,7 @@
 import Foundation
 
 enum UnitsOfMeasure {
-    case bag, dozen, bottle, kg
+    case bag, dozen, bottle, kg, none
     
     var name: String {
         switch self {
@@ -20,6 +20,8 @@ enum UnitsOfMeasure {
             return " / butelkę"
         case .kg:
             return " / kilogram"
+        case .none:
+            return " / - "
         }
     }
 }

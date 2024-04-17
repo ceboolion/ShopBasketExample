@@ -4,21 +4,18 @@ import RxSwift
 class ProductViewCell: UITableViewCell {
     
     //MARK: - PRIVATE PROPERTIES
-    private var productData: ProductModel?
+    private var productData: ProductModel = .init(product: .none, productPrice: 0, itemsAvailable: 0, unitOfMeasure: .none)
     private var productImageView: UIImageView!
     private var productTitleLabel: UILabel!
     private var productPriceLabel: UILabel!
     private var productAvailabilityNumber: UILabel!
     private var productBuyButton: UIButton!
     private var stackView: UIStackView!
-//    private var minusButton: UIButton!
-//    private var buyQuantityLabel: UILabel!
-//    private var plusButton: UIButton!
     private var productQuantityStackView: UIStackView!
     private var quantityManagementView: QuantityManagementView!
     
     private let productImageHeight: CGFloat = 80
-    private let disposeBag = DisposeBag()
+    private var disposeBag = DisposeBag()
 
     // MARK: - INIT
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -31,6 +28,11 @@ class ProductViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func prepareForReuse() {
+        disposeBag = DisposeBag()
+        super.prepareForReuse()
+    }
+    
     //MARK: - OVERRIDDEN METHODS
     override func layoutSubviews() {
         super.layoutSubviews()
@@ -40,9 +42,9 @@ class ProductViewCell: UITableViewCell {
     //MARK: - PUBLIC METHODS
     func configureCell(with model: ProductModel) {
         productData = model
-        configureImageView(with: model.product)
-        configureProductTitle(for: model.product)
-        configureProductPriceLabel(for: model)
+        configureImageView()
+        configureProductTitle()
+        configureProductPriceLabel()
         configureProductAvailabilityLabel()
         configureProductBuyButton()
         configureQuantityManagementView()
@@ -58,21 +60,21 @@ class ProductViewCell: UITableViewCell {
         productImageView.layer.cornerRadius = 25
     }
     
-    private func configureImageView(with productType: ProductType) {
+    private func configureImageView() {
         productImageView = UIImageView()
-        productImageView.image = UIImage(resource: productType.image)
+        productImageView.image = UIImage(resource: productData.product.image)
     }
     
-    private func configureProductTitle(for productType: ProductType) {
+    private func configureProductTitle() {
         productTitleLabel = UILabel()
-        productTitleLabel.text = productType.productTitle
+        productTitleLabel.text = productData.product.productTitle
         productTitleLabel.font = .systemFont(ofSize: 17, weight: .bold)
         productTitleLabel.minimumScaleFactor = 0.6
     }
     
-    private func configureProductPriceLabel(for model: ProductModel) {
+    private func configureProductPriceLabel() {
         productPriceLabel = UILabel()
-        productPriceLabel.text = model.productPrice.formatted(.currency(code: "USD")) + model.unitOfMeasure.name
+        productPriceLabel.text = productData.productPrice.formatted(.currency(code: "USD")) + productData.unitOfMeasure.name
         productPriceLabel.font = .systemFont(ofSize: 14, weight: .regular)
         productTitleLabel.minimumScaleFactor = 0.6
     }
@@ -142,7 +144,6 @@ class ProductViewCell: UITableViewCell {
             .tap
             .bind { [weak self] in
                 print("WRC productBuyButton tapped in cell")
-                
             }
             .disposed(by: disposeBag)
     }
@@ -151,8 +152,7 @@ class ProductViewCell: UITableViewCell {
         ShoppingBasket.shared.basketItems
             .bind { [weak self] data in
                 print("WRC ShoppingBasket data: \(data)")
-                if let productIndex = data.firstIndex(where: {$0.id == self?.productData?.id}) {
-//                    self?.buyQuantityLabel.text = "\(Int(data[productIndex].numberOfChosenProducts))"
+                if let productIndex = data.firstIndex(where: {$0.id == self?.productData.id}) {
                     self?.setProductAvailabilityNumber(productsNumber: data[productIndex].numberOfChosenProducts.asInt())
                 }
             }
@@ -164,7 +164,6 @@ class ProductViewCell: UITableViewCell {
     }
     
     private func getProductAvailabilityNumber(productsNumber: Int) -> String {
-        guard let productData else { return " - "}
         let availabilityNumber = productData.itemsAvailable - productsNumber
         return "Dostępne: \(availabilityNumber)"
     }

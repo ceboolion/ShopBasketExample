@@ -1,10 +1,3 @@
-//
-//  BasketProductsModel.swift
-//  HomeAssignment
-//
-//  Created by Ceboolion on 16/04/2024.
-//
-
 import Foundation
 
 struct BasketProductsModel: ProductModelProtocol {
@@ -14,4 +7,12 @@ struct BasketProductsModel: ProductModelProtocol {
     var unitOfMeasure: UnitsOfMeasure
     var numberOfChosenProducts: Double
     var numberOfAvailableProducts: Int
+    
+    func getProductModel() -> ProductModel {
+        ProductModel(id: id, 
+                     product: product,
+                     productPrice: productPrice,
+                     itemsAvailable: numberOfAvailableProducts,
+                     unitOfMeasure: unitOfMeasure)
+    }
 }

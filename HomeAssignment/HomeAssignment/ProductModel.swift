@@ -31,6 +31,8 @@ struct ProductModel: ProductModelProtocol {
             itemsAvailable > 1 ? "Butelki" : "Butelka"
         case .kg:
             itemsAvailable > 1 ? "Kilogramy" : "Kilogram"
+        case .none:
+            ""
         }
     }
     

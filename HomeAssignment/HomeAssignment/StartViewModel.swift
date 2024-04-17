@@ -32,10 +32,8 @@ final class StartViewModel {
         networkingService?.fetchCurrencyData()
             .subscribe(onNext: { [weak self] currencyData in
                 self?.currenciesData.accept(currencyData.getCurrencyData())
-                // Handle success
             }, onError: { error in
                 print("Error: \(error)")
-                // Handle error
             })
             .disposed(by: disposeBag)
     }
@@ -53,6 +51,8 @@ final class StartViewModel {
                 data.append(ProductModel(product: .banana, productPrice: 0.73, itemsAvailable: 4, unitOfMeasure: .kg))
             case .potato:
                 data.append(ProductModel(product: .potato, productPrice: 0.95, itemsAvailable: 4, unitOfMeasure: .bag))
+            case .none:
+                break
             }
         }
         return data

@@ -8,7 +8,7 @@ class QuantityManagementView: UIView {
     //MARK: - PRIVATE PROPERTIES
     private var productData: ProductModel?
     private var minusButton: UIButton!
-    private var buyQuantityLabel: UILabel!
+    private(set) var buyQuantityLabel: UILabel!
     private var plusButton: UIButton!
     private var stackView: UIStackView!
     private let disposeBag = DisposeBag()
@@ -18,6 +18,7 @@ class QuantityManagementView: UIView {
         self.productData = productData
         super.init(frame: .zero)
         setupUI()
+        setupObservers()
     }
     
     //MARK: - OVERRIDDEN METHODS
@@ -36,7 +37,6 @@ class QuantityManagementView: UIView {
         configurePlusButton()
         configureStackView()
         configureConstraints()
-        setupObservers()
     }
     
     private func configureMinusButton() {

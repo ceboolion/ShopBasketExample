@@ -10,13 +10,14 @@ import RxSwift
 
 final class BasketCoordinator: NSObject, Coordinator {
     
+    //MARK: - PRIVATE PROPERTIES
+    private let disposeBag = DisposeBag()
+    
     //MARK: - PUBLIC PROPERTIES
     var navigationController: UINavigationController
     var childCoordinators: [Coordinator] = []
     var type: CoordinatorType { .basket }
     weak var parentCoordinator: Coordinator?
-    
-    private let disposeBag = DisposeBag()
     
     // MARK: - INITIALIZER
     init(navigationController: UINavigationController) {
@@ -30,16 +31,31 @@ final class BasketCoordinator: NSObject, Coordinator {
         bindBasketItems()
     }
     
+    //MARK: - PUBLIC METHODS
     func start() {
         let controller = BasketController(basketView: BasketView(viewModel: BasketViewModel()))
+        controller.didSendEventClosure = { [weak self] event in
+            switch event {
+            case .showPayView:
+                self?.showPayView()
+            }
+        }
         navigationController.pushViewController(controller, animated: true)
     }
     
-    func setupObservables() {
+    //MARK: - PRIVATE METHODS
+    private func showPayView() {
+        let controller = UIViewController()
+        controller.view.backgroundColor = .systemBackground
+        navigationController.pushViewController(controller, animated: true)
+    }
+    
+    //MARK: - RX
+    private func setupObservables() {
         bindBasketItems()
     }
     
-    func bindBasketItems() {
+    private func bindBasketItems() {
         ShoppingBasket.shared.basketItems
             .bind { [weak self] basketData in
                 basketData.forEach { print("WRC numberOfAvailableProducts: \($0.numberOfAvailableProducts), numberOfChosenProducts: \($0.numberOfChosenProducts)")}
