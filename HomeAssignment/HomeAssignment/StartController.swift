@@ -18,7 +18,7 @@ class StartController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationController?.view.backgroundColor = .systemGray6
+        navigationController?.navigationBar.barTintColor = .systemGray6
     }
     
     init(viewModel: StartViewModel) {
@@ -59,12 +59,8 @@ class StartController: UIViewController {
     //MARK: - RX
     func bindTableViewProducts() {
         viewModel.productsData
-            .bind(to: tableView.rx.items) { [weak self] _, index, model in
-                let indexPath = IndexPath(row: index, section: 0)
-                let cell = self?.tableView.dequeueReusableCell(withIdentifier: ProductViewCell.reuseIdentifier, for: indexPath) as? ProductViewCell
-                guard let cell else { return UITableViewCell() }
-                cell.configureCell(with: model)
-                return cell
+            .bind(to: tableView.rx.items(cellIdentifier: ProductViewCell.reuseIdentifier, cellType: ProductViewCell.self)) { cellIndex, cellData, cell in
+                cell.configureCell(with: cellData)
             }
             .disposed(by: viewModel.disposeBag)
         

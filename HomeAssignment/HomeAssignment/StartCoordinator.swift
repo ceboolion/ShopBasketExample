@@ -1,10 +1,3 @@
-//
-//  StartCoordinator.swift
-//  HomeAssignment
-//
-//  Created by Ceboolion on 14/04/2024.
-//
-
 import UIKit
 
 final class StartCoordinator: NSObject, Coordinator {
@@ -30,7 +23,6 @@ final class StartCoordinator: NSObject, Coordinator {
         controller.didSendEventClosure = { [weak self] event in
             switch event {
             case .showProduct(let data):
-//                print("WRC didSendEventClosure showProduct data: \(data)")
                 self?.showProductDetails(with: data)
             }
         }

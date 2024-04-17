@@ -20,6 +20,7 @@ class BasketTableViewCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         selectionStyle = .none
+        configureUI()
     }
     
     required init?(coder: NSCoder) {
@@ -34,13 +35,21 @@ class BasketTableViewCell: UITableViewCell {
     //MARK: - OVERRIDDEN METHODS
     override func layoutSubviews() {
         super.layoutSubviews()
-        configureUI()
+        updateUI()
     }
     
     //MARK: - PUBLIC METHODS
     func configureCell(with model: BasketProductsModel) {
         basketData = model
         productData = model.getProductModel()
+        setQuantityManagementViewData()
+        setProductImageViewImage()
+        setProductTitleLabelText()
+        setProductNumberLabelText()
+    }
+    
+    //MARK: - PRIVATE METHODS
+    private func configureUI() {
         configureProductImageView()
         configureProductTitleLabel()
         configureProductNumberLabel()
@@ -49,25 +58,15 @@ class BasketTableViewCell: UITableViewCell {
         configureBottomStackView()
         configureTopStackView()
         configureConstraints()
-        setupObservables()
-        productNumberLabel.text = (quantityManagementView.buyQuantityLabel.text ?? "") + " x " + productData.productPrice.formatted(.currency(code: "USD"))
-    }
-    
-    //MARK: - PRIVATE METHODS
-    private func configureUI() {
-        productImageView.clipsToBounds = true
-        productImageView.layer.cornerRadius = 25
     }
     
     private func configureProductImageView() {
         productImageView = .init()
         productImageView.contentMode = .scaleAspectFill
-        productImageView.image = UIImage(resource: productData.product.image)
     }
     
     private func configureProductTitleLabel() {
         productTitleLabel = .init()
-        productTitleLabel.text = productData.product.productTitle
         productTitleLabel.font = .systemFont(ofSize: 16, weight: .semibold)
         productTitleLabel.numberOfLines = 2
         productTitleLabel.lineBreakMode = .byWordWrapping
@@ -76,7 +75,6 @@ class BasketTableViewCell: UITableViewCell {
     private func configureProductNumberLabel() {
         productNumberLabel = .init()
         productNumberLabel.font = .systemFont(ofSize: 14, weight: .regular)
-        productNumberLabel.text = (basketData?.numberOfChosenProducts.asInt().description ?? "") + " x " + productData.productPrice.formatted(.currency(code: "USD"))
     }
     
     private func configureSummaryCostLabel() {
@@ -84,7 +82,28 @@ class BasketTableViewCell: UITableViewCell {
     }
     
     private func configureQuantityManagementView() {
-        quantityManagementView = QuantityManagementView(productData: productData)
+        quantityManagementView = .init()
+    }
+    
+    private func updateUI() {
+        productImageView.clipsToBounds = true
+        productImageView.layer.cornerRadius = 25
+    }
+    
+    private func setProductImageViewImage() {
+        productImageView.image = UIImage(resource: productData.product.image)
+    }
+    
+    private func setProductTitleLabelText() {
+        productTitleLabel.text = productData.product.productTitle
+    }
+    
+    private func setProductNumberLabelText() {
+        productNumberLabel.text = (basketData?.numberOfChosenProducts.asInt().description ?? "") + " x " + productData.productPrice.formatted(.currency(code: "USD"))
+    }
+    
+    private func setQuantityManagementViewData() {
+        quantityManagementView.setupData(with: productData)
     }
     
     private func configureBottomStackView() {
@@ -123,18 +142,9 @@ class BasketTableViewCell: UITableViewCell {
         }
     }
     
-    private func setupObservables() {
-//        bindShoppingBasketData()
-    }
-    
-//    private func bindShoppingBasketData() {
-//        ShoppingBasket.shared.basketItems
-//            .bind { [weak self] data in
-//                guard let cellData = data.first(where: {$0.id == self?.productData.id}) else { return }
-//                self?.productNumberLabel.text = cellData.numberOfChosenProducts.asInt().description + " x " + cellData.productPrice.formatted(.currency(code: "USD"))
-//            }
-//            .disposed(by: disposeBag)
-//    }
-    
     
 }
+
+// TODO
+// skrolowanie listy tylko gdy za dużo elementów
+// doro

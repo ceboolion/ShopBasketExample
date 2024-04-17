@@ -110,12 +110,8 @@ class BasketView: UIView {
     
     private func bindTableViewData() {
         viewModel.basketData
-            .bind(to: tableView.rx.items) { [weak self] _, index, model in
-                let indexPath = IndexPath(row: index, section: 0)
-                let cell = self?.tableView.dequeueReusableCell(withIdentifier: BasketTableViewCell.reuseIdentifier, for: indexPath) as? BasketTableViewCell
-                guard let cell else { return UITableViewCell() }
-                cell.configureCell(with: model)
-                return cell
+            .bind(to: tableView.rx.items(cellIdentifier: BasketTableViewCell.reuseIdentifier, cellType: BasketTableViewCell.self)) { cellIndex, cellData, cell in
+                cell.configureCell(with: cellData)
             }
             .disposed(by: viewModel.disposeBag)
     }

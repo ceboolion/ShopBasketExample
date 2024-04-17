@@ -13,21 +13,29 @@ class QuantityManagementView: UIView {
     private var stackView: UIStackView!
     private let disposeBag = DisposeBag()
     
-    // MARK: - INIT
-    init(productData: ProductModel?) {
-        self.productData = productData
-        super.init(frame: .zero)
-        setupUI()
-        setupObservers()
-    }
+//    // MARK: - INIT
+//    init(productData: ProductModel?) {
+//        self.productData = productData
+//        super.init(frame: .zero)
+//        setupUI()
+//        setupObservers()
+//    }
     
     //MARK: - OVERRIDDEN METHODS
     override init(frame: CGRect) {
         super.init(frame: frame)
+        setupUI()
+        setupObservers()
     }
+    
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    //MARK: - PUBLIC METHODS
+    func setupData(with data: ProductModel) {
+        productData = data
     }
     
     //MARK: - PRIVATE METHODS

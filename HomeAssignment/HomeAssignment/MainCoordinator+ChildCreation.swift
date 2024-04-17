@@ -1,10 +1,3 @@
-//
-//  MainCoordinator+ChildCreation.swift
-//  HomeAssignment
-//
-//  Created by Ceboolion on 14/04/2024.
-//
-
 import UIKit
 
 extension MainCoordinator {

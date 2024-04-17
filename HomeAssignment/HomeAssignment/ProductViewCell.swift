@@ -22,6 +22,7 @@ class ProductViewCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         accessoryType = .disclosureIndicator
         selectionStyle = .none
+        configureUI()
     }
     
     required init?(coder: NSCoder) {
@@ -36,16 +37,30 @@ class ProductViewCell: UITableViewCell {
     //MARK: - OVERRIDDEN METHODS
     override func layoutSubviews() {
         super.layoutSubviews()
-        configureUI()
+        updateUI()
     }
     
     //MARK: - PUBLIC METHODS
     func configureCell(with model: ProductModel) {
         productData = model
-        configureImageView()
-        configureProductTitle()
+        setImageViewImage()
+        setProductTitleText()
+        setProductPriceLabelText()
+        setProductAvailabilityLabelText()
+        setQuantityManagementViewData()
+    }
+    
+    //MARK: - PRIVATE METHODS
+    private func updateUI() {
+        productImageView.clipsToBounds = true
+        productImageView.layer.cornerRadius = 25
+    }
+    
+    private func configureUI() {
+        configureProductImageView()
+        configureProductTitleLabel()
         configureProductPriceLabel()
-        configureProductAvailabilityLabel()
+        configureProductAvailabilityNumber()
         configureProductBuyButton()
         configureQuantityManagementView()
         configureProductQuantityStackView()
@@ -54,45 +69,35 @@ class ProductViewCell: UITableViewCell {
         setupObservers()
     }
     
-    //MARK: - PRIVATE METHODS
-    private func configureUI() {
-        productImageView.clipsToBounds = true
-        productImageView.layer.cornerRadius = 25
+    private func configureProductImageView() {
+        productImageView = .init()
     }
     
-    private func configureImageView() {
-        productImageView = UIImageView()
-        productImageView.image = UIImage(resource: productData.product.image)
-    }
-    
-    private func configureProductTitle() {
-        productTitleLabel = UILabel()
-        productTitleLabel.text = productData.product.productTitle
+    private func configureProductTitleLabel() {
+        productTitleLabel = .init()
         productTitleLabel.font = .systemFont(ofSize: 17, weight: .bold)
         productTitleLabel.minimumScaleFactor = 0.6
     }
     
     private func configureProductPriceLabel() {
-        productPriceLabel = UILabel()
-        productPriceLabel.text = productData.productPrice.formatted(.currency(code: "USD")) + productData.unitOfMeasure.name
+        productPriceLabel = .init()
         productPriceLabel.font = .systemFont(ofSize: 14, weight: .regular)
         productTitleLabel.minimumScaleFactor = 0.6
     }
     
-    private func configureProductAvailabilityLabel() {
-        productAvailabilityNumber = UILabel()
-        productAvailabilityNumber.text = getProductAvailabilityNumber(productsNumber: 0)
+    private func configureProductAvailabilityNumber() {
+        productAvailabilityNumber = .init()
         productAvailabilityNumber.font = .systemFont(ofSize: 14, weight: .light)
+    }
+    
+    private func configureQuantityManagementView() {
+        quantityManagementView = .init()
     }
     
     private func configureProductBuyButton() {
         productBuyButton = UIButton(type: .system)
         productBuyButton.setTitle("Kup", for: .normal)
         productBuyButton.setTitle("Kup", for: .highlighted)
-    }
-    
-    private func configureQuantityManagementView() {
-        quantityManagementView = QuantityManagementView(productData: productData)
     }
     
     private func configureProductQuantityStackView() {
@@ -130,6 +135,26 @@ class ProductViewCell: UITableViewCell {
         productQuantityStackView.snp.makeConstraints {
             $0.width.equalTo(stackView.snp.width)
         }
+    }
+    
+    private func setImageViewImage() {
+        productImageView.image = UIImage(resource: productData.product.image)
+    }
+    
+    private func setProductTitleText() {
+        productTitleLabel.text = productData.product.productTitle
+    }
+    
+    private func setProductPriceLabelText() {
+        productPriceLabel.text = productData.productPrice.formatted(.currency(code: "USD")) + productData.unitOfMeasure.name
+    }
+    
+    private func setProductAvailabilityLabelText() {
+        productAvailabilityNumber.text = getProductAvailabilityNumber(productsNumber: 0)
+    }
+    
+    private func setQuantityManagementViewData() {
+        quantityManagementView.setupData(with: productData)
     }
     
     //MARK: - RX
