@@ -4,6 +4,7 @@ import RxSwift
 
 class BasketTableViewCell: UITableViewCell {
     
+    //MARK: - PUBLIC PROPERTIES
     var onTap: ((BasketUpdateType, ProductModel) -> Void)?
     
     //MARK: - PRIVATE PROPERTIES
@@ -30,11 +31,6 @@ class BasketTableViewCell: UITableViewCell {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    override func prepareForReuse() {
-        disposeBag = DisposeBag()
-        super.prepareForReuse()
     }
     
     //MARK: - OVERRIDDEN METHODS
@@ -154,6 +150,3 @@ class BasketTableViewCell: UITableViewCell {
     
     
 }
-
-// TODO
-// skrolowanie listy tylko gdy za dużo elementów

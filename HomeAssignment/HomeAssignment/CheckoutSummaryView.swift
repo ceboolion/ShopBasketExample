@@ -43,12 +43,6 @@ class CheckoutSummaryView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        
-        
-    }
-    
     //MARK: - PUBLIC METHODS
     func setCurrencyData(_ data: [CurrencyModel]) {
         currencyData = data
@@ -195,14 +189,12 @@ class CheckoutSummaryView: UIView {
     
     private func setLabelsData(with data: [BasketProductsModel]) {
         let currencyMultiplier = currencyData.first(where: {$0.currency == chosenCurrency})
-        
         let totalAmount = data.reduce(0, { $0 + ($1.productPrice * $1.numberOfChosenProducts)}) * (currencyMultiplier?.currencyData ?? 1)
         let shipmentCost = 1.99 * (currencyMultiplier?.currencyData ?? 1)
         setProductSummaryAmount(amount: totalAmount.formatted(.currency(code: chosenCurrency)))
         setShipmentAmount(amount: shipmentCost.formatted(.currency(code: chosenCurrency)))
         setCostSummaryView(amount: (totalAmount + shipmentCost).formatted(.currency(code: chosenCurrency)))
     }
-    
     
     
 }
@@ -223,7 +215,6 @@ extension CheckoutSummaryView: UIPickerViewDelegate, UIPickerViewDataSource {
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        print("WRC selected currency: \(pickerData[row])")
         chosenCurrency = pickerData[row]
     }
     

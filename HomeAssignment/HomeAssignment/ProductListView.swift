@@ -1,27 +1,29 @@
-//
-//  ProductListView.swift
-//  HomeAssignment
-//
-//  Created by Ceboolion on 15/04/2024.
-//
-
 import UIKit
 
 class ProductListView: UIView {
     
-    var tableView: UITableView!
+    //MARK: - PRIVATE PROPERTIES
+    private var viewModel: StartViewModel!
+    private var tableView: UITableView!
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    //MARK: - PUBLIC PROPERTIES
+    var didSendEventClosure: ((StartController.Event)->Void)?
+    
+    // MARK: - INIT
+    init(viewModel: StartViewModel) {
+        super.init(frame: .zero)
+        self.viewModel = viewModel
+        setup()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
+    //MARK: - PRIVATE METHODS
     private func setup() {
         configureTableView()
-//        setupObservers()
+        setupObservers()
         configureConstraints()
     }
     
@@ -35,44 +37,37 @@ class ProductListView: UIView {
     private func configureConstraints() {
         addSubview(tableView)
         tableView.snp.makeConstraints {
-            $0.top.equalTo(safeAreaLayoutGuide)
-            $0.leading.bottom.trailing.equalToSuperview()
+            $0.edges.equalToSuperview()
         }
     }
     
+    private func setupObservers() {
+        bindTableViewProducts()
+    }
+    
     //MARK: - RX
-//    private func setupObservers() {
-//        bindTableViewProducts()
-//        bindCurrenciesData()
-//    }
-
-//    func bindTableViewProducts() {
-//        viewModel.productsData
-//            .bind(to: tableView.rx.items) { [weak self] _, index, model in
-//                let indexPath = IndexPath(row: index, section: 0)
-//                let cell = self?.tableView.dequeueReusableCell(withIdentifier: ProductViewCell.reuseIdentifier, for: indexPath) as? ProductViewCell
-//                cell?.configureCell(with: model)
-//                return cell ?? UITableViewCell()
-//            }
-//            .disposed(by: viewModel.disposeBag)
-//        
-//        tableView
-//            .rx
-//            .itemSelected
-//            .map(\.row)
-//            .bind { [weak self] row in
-//                guard let data = self?.viewModel.productsData.value[row] else { return }
-//                self?.didSendEventClosure?(.showProduct(data))
-//            }
-//            .disposed(by: viewModel.disposeBag)
-//    }
-//    
-//    func bindCurrenciesData() {
-//        viewModel.currenciesData
-//            .bind { [weak self] data in
-//                print("WRC currenciesData: \(data)")
-//            }
-//            .disposed(by: viewModel.disposeBag)
-//    }
+    private func bindTableViewProducts() {
+        viewModel.productsData
+            .bind(to: tableView.rx.items(cellIdentifier: ProductViewCell.reuseIdentifier,
+                                         cellType: ProductViewCell.self)) { [weak self] cellIndex, cellData, cell in
+                guard let self else { return }
+                cell.configureCell(with: cellData)
+                cell.onTap = { updateType, data in
+                    self.viewModel.updateShoppingData(updateType: updateType, data: data)
+                }
+            }
+            .disposed(by: viewModel.disposeBag)
+        
+        tableView
+            .rx
+            .itemSelected
+            .map(\.item)
+            .bind { [weak self] row in
+                guard let data = self?.viewModel.productsData.value[row] else { return }
+                self?.didSendEventClosure?(.showProduct(data))
+            }
+            .disposed(by: viewModel.disposeBag)
+    }
+    
     
 }

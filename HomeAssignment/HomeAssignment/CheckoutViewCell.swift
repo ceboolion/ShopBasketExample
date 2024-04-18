@@ -3,10 +3,6 @@ import UIKit
 class CheckoutViewCell: UITableViewCell {
     
     //MARK: - PRIVATE PROPERTIES
-//    private var productData: ProductModel = .init(product: .none,
-//                                                  productPrice: 0,
-//                                                  itemsAvailable: 0,
-//                                                  unitOfMeasure: .none)
     private var basketData: BasketProductsModel = .init(id: UUID(),
                                                         product: .none,
                                                         productPrice: 0,
@@ -17,12 +13,11 @@ class CheckoutViewCell: UITableViewCell {
     private var productTitleLabel: UILabel!
     private var chosenProductNumberLabel: UILabel!
     private var productPriceLabel: UILabel!
-    
     private var stackView: UIStackView!
-    
     private let imageHeight: CGFloat = 60.0
     private let imagePadding: CGFloat = 5.0
     
+    //MARK: - OVERRIDDEN METHODS
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         selectionStyle = .none
@@ -113,5 +108,6 @@ class CheckoutViewCell: UITableViewCell {
             $0.bottom.trailing.equalToSuperview().offset(-imagePadding)
         }
     }
+    
     
 }

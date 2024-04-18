@@ -3,11 +3,14 @@ import SnapKit
 
 class StartController: UIViewController {
     
+    //MARK: - PRIVATE PROPERTIES
+    private var productListView: ProductListView!
     private var viewModel: StartViewModel!
-    private var tableView: UITableView!
     
+    //MARK: - PUBLIC PROPERTIES
     var didSendEventClosure: ((Event)->Void)?
     
+    //MARK: - LIFECYCLE
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Start"
@@ -19,60 +22,31 @@ class StartController: UIViewController {
     init(viewModel: StartViewModel) {
         super.init(nibName: nil, bundle: nil)
         self.viewModel = viewModel
+        configureProductListView(with: viewModel)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
+    //MARK: - PRIVATE METHODS
     private func setup() {
-        configureTableView()
-        setupObservers()
         configureConstraints()
     }
     
-    private func configureTableView() {
-        tableView = UITableView()
-        tableView.estimatedRowHeight = 80
-        tableView.rowHeight = UITableView.automaticDimension
-        tableView.showsVerticalScrollIndicator = false
-        tableView.register(ProductViewCell.self, forCellReuseIdentifier: ProductViewCell.reuseIdentifier)
-    }
-    
-    private func configureConstraints() {
-        view.addSubview(tableView)
-        tableView.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide)
-            $0.leading.bottom.trailing.equalToSuperview()
+    private func configureProductListView(with viewModel: StartViewModel) {
+        productListView = ProductListView(viewModel: viewModel)
+        productListView.didSendEventClosure = { [weak self] event in
+            self?.didSendEventClosure?(event)
         }
     }
     
-    private func setupObservers() {
-        bindTableViewProducts()
-    }
-    
-    //MARK: - RX
-    private func bindTableViewProducts() {
-        viewModel.productsData
-            .bind(to: tableView.rx.items(cellIdentifier: ProductViewCell.reuseIdentifier, 
-                                         cellType: ProductViewCell.self)) { [weak self] cellIndex, cellData, cell in
-                guard let self else { return }
-                cell.configureCell(with: cellData)
-                cell.onTap = { updateType, data in
-                    self.viewModel.updateShoppingData(updateType: updateType, data: data)
-                }
-            }
-            .disposed(by: viewModel.disposeBag)
-        
-        tableView
-            .rx
-            .itemSelected
-            .map(\.item)
-            .bind { [weak self] row in
-                guard let data = self?.viewModel.productsData.value[row] else { return }
-                self?.didSendEventClosure?(.showProduct(data))
-            }
-            .disposed(by: viewModel.disposeBag)
+    private func configureConstraints() {
+        view.addSubview(productListView)
+        productListView.snp.makeConstraints {
+            $0.top.equalTo(view.safeAreaLayoutGuide)
+            $0.leading.bottom.trailing.equalToSuperview()
+        }
     }
 
 

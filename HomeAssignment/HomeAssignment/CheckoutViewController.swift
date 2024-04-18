@@ -9,6 +9,7 @@ class CheckoutViewController: UIViewController {
     //MARK: - PRIVATE PROPERTIES
     private var checkoutView: CheckoutView!
     
+    // MARK: - INIT
     init(checkoutView: CheckoutView) {
         self.checkoutView = checkoutView
         super.init(nibName: nil, bundle: nil)

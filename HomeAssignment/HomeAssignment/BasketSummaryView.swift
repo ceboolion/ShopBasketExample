@@ -108,7 +108,6 @@ class BasketSummaryView: UIView {
                 self?.setCostSummaryView(amount: (totalAmount + shipmentCost).formatted(.currency(code: "USD")))
             }
             .disposed(by: disposeBag)
-        
     }
     
     

@@ -3,6 +3,7 @@ import RxSwift
 
 class ProductViewCell: UITableViewCell {
     
+    //MARK: - PUBLIC PROPERTIES
     var onTap: ((BasketUpdateType, ProductModel) -> Void)?
     
     //MARK: - PRIVATE PROPERTIES
@@ -14,11 +15,9 @@ class ProductViewCell: UITableViewCell {
     private var productTitleLabel: UILabel!
     private var productPriceLabel: UILabel!
     private var productAvailabilityNumber: UILabel!
-    private var productBuyButton: UIButton!
+    private var addProductButton: UIButton!
     private var stackView: UIStackView!
     private var productQuantityStackView: UIStackView!
-    private var quantityManagementView: QuantityManagementView!
-    
     private let productImageHeight: CGFloat = 80
     private var disposeBag = DisposeBag()
 
@@ -61,7 +60,6 @@ class ProductViewCell: UITableViewCell {
         configureProductPriceLabel()
         configureProductAvailabilityNumber()
         configureProductBuyButton()
-        configureQuantityManagementView()
         configureProductQuantityStackView()
         configureStackView()
         setupConstraints()
@@ -92,18 +90,10 @@ class ProductViewCell: UITableViewCell {
         productAvailabilityNumber.font = .systemFont(ofSize: 14, weight: .light)
     }
     
-    private func configureQuantityManagementView() {
-        quantityManagementView = .init()
-        quantityManagementView.onButtonTap = { [weak self] updateType in
-            guard let data = self?.productData else { return }
-            self?.onTap?(updateType, data)
-        }
-    }
-    
     private func configureProductBuyButton() {
-        productBuyButton = UIButton(type: .system)
-        productBuyButton.setTitle("Kup", for: .normal)
-        productBuyButton.setTitle("Kup", for: .highlighted)
+        addProductButton = UIButton(type: .system)
+        addProductButton.setTitle("Wrzuć do koszyka", for: .normal)
+        addProductButton.setTitle("Wrzuć do koszyka", for: .highlighted)
     }
     
     private func configureProductQuantityStackView() {
@@ -111,7 +101,7 @@ class ProductViewCell: UITableViewCell {
         productQuantityStackView.axis = .horizontal
         productQuantityStackView.alignment = .center
         productQuantityStackView.spacing = 6
-        productQuantityStackView.addSubviews(views: productBuyButton, UIView(), quantityManagementView)
+        productQuantityStackView.addSubviews(views: addProductButton, UIView()/*, quantityManagementView*/)
     }
     
     private func configureStackView() {
@@ -166,11 +156,12 @@ class ProductViewCell: UITableViewCell {
     }
     
     private func bindBuyButton() {
-        productBuyButton
+        addProductButton
             .rx
             .tap
             .bind { [weak self] in
-                print("WRC productBuyButton tapped in cell")
+                guard let data = self?.productData else { return }
+                self?.onTap?(.add, data)
             }
             .disposed(by: disposeBag)
     }
@@ -180,7 +171,6 @@ class ProductViewCell: UITableViewCell {
             .bind { [weak self] data in
                 if let productIndex = data.firstIndex(where: {$0.id == self?.productData.id}) {
                     self?.setProductAvailabilityLabelText(quantity: data[productIndex].numberOfChosenProducts.asInt())
-                    self?.quantityManagementView.setupData(with: data[productIndex])
                 } else {
                     self?.resetData()
                 }
@@ -190,7 +180,6 @@ class ProductViewCell: UITableViewCell {
     
     private func resetData() {
         setProductAvailabilityLabelText(quantity: 0)
-        quantityManagementView.setupData(with: productData.mapProductModel(numberOfChosenProducts: 0))
     }
     
     private func getProductAvailabilityNumber(productsNumber: Int) -> String {

@@ -33,7 +33,6 @@ class BasketController: UIViewController {
         configureConstraints()
     }
 
-    
     private func configureConstraints() {
         view.addSubview(basketView)
         basketView.snp.makeConstraints{
@@ -62,6 +61,7 @@ class BasketController: UIViewController {
             }
             .disposed(by: basketView.viewModel.disposeBag)
     }
+    
 
 }
 

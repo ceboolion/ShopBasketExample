@@ -26,7 +26,7 @@ final class BasketCoordinator: NSObject, Coordinator {
     
     //MARK: - PUBLIC METHODS
     func start() {
-        let controller = BasketController(basketView: BasketView(viewModel: BasketViewModel(networkingService: NetworkingService())))
+        let controller = BasketController(basketView: BasketView(viewModel: BasketViewModel()))
         controller.didSendEventClosure = { [weak self] event in
             switch event {
             case .showPayView:

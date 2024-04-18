@@ -3,14 +3,17 @@ import SnapKit
 
 class ProductDetailsViewController: UIViewController {
     
+    //MARK: - PRIVATE PROPERTIES
     private let productDetailView: ProductDetailView
     
+    //MARK: - LIFECYCLE
     override func loadView() {
         super.loadView()
         setupBackButton()
         setupUI()
     }
     
+    // MARK: - INIT
     init(rootView: ProductDetailView, data: ProductModel) {
         self.productDetailView = rootView
         super.init(nibName: nil, bundle: nil)
@@ -44,5 +47,6 @@ class ProductDetailsViewController: UIViewController {
             $0.leading.bottom.trailing.equalToSuperview()
         }
     }
+    
     
 }

@@ -96,7 +96,6 @@ class CheckoutView: UIView {
             $0.trailing.equalTo(-padding)
             $0.bottom.equalTo(safeAreaLayoutGuide)
         }
-        
     }
     
     //MARK: - RX

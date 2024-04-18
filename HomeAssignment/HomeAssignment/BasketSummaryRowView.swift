@@ -1,10 +1,3 @@
-//
-//  BasketSummaryRowView.swift
-//  HomeAssignment
-//
-//  Created by Ceboolion on 17/04/2024.
-//
-
 import UIKit
 import SnapKit
 

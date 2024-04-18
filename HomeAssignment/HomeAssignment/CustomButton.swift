@@ -2,8 +2,10 @@ import UIKit
 
 class CustomButton: UIButton {
     
+    //MARK: - PUBLIC PROPERTIES
     var onTap: (() -> Void)?
     
+    //MARK: - OVERRIDDEN METHODS
     override init(frame: CGRect) {
         super.init(frame: .zero)
         addTarget(self, action: #selector(onTapButton), for: .touchUpInside)
@@ -22,6 +24,7 @@ class CustomButton: UIButton {
         }
     }
     
+    //MARK: - PRIVATE METHODS
     @objc
     private func onTapButton() {
         onTap?()

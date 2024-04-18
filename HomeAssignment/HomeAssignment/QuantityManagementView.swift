@@ -5,6 +5,7 @@ import RxSwift
 
 class QuantityManagementView: UIView {
     
+    //MARK: - PUBLIC PROPERTIES
     var onButtonTap: ((BasketUpdateType) -> Void)?
     
     //MARK: - PRIVATE PROPERTIES
@@ -20,7 +21,6 @@ class QuantityManagementView: UIView {
         super.init(frame: frame)
         setupUI()
     }
-    
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

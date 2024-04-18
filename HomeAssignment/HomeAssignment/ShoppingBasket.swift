@@ -14,7 +14,6 @@ class ShoppingBasket {
     //MARK: - PUBLIC METHODS
     func addProduct(products: [BasketProductsModel]) {
         basketItems.accept(products)
-        print("WRC add basketItems: \(basketItems.value.count)")
     }
     
     func removeProduct(products: [BasketProductsModel]) {
@@ -34,7 +33,6 @@ class ShoppingBasket {
                 guard let index = products.firstIndex(where: {$0.id == product.id}) else { return }
                 products.remove(at: index)
                 basketItems.accept(products)
-                print("WRC removeProductIfNeeded at index: \(index)")
             }
         }
     }

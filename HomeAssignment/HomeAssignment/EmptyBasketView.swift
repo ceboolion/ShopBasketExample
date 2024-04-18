@@ -12,8 +12,10 @@ class EmptyBasketView: UIView {
     private var emptyBasketButton: UIButton!
     private var textLabel: UILabel!
     private var messageLabel: UILabel!
+    private var shopButton: UIButton!
     private let disposeBag = DisposeBag()
     
+    // MARK: - INIT
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupUI()
@@ -23,10 +25,12 @@ class EmptyBasketView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    //MARK: - PRIVATE METHODS
     private func setupUI() {
         configureEmptyBasketButton()
         configureTextLabel()
         configureMessageLabel()
+        configureShopButton()
         configureConstraints()
         setupObservers()
     }
@@ -54,10 +58,23 @@ class EmptyBasketView: UIView {
         messageLabel.textAlignment = .center
     }
     
+    private func configureShopButton() {
+        shopButton = .init(type: .system)
+        shopButton.setTitle("Wrzuć coś :)", for: .normal)
+        shopButton.setTitle("Wrzuć coś :)", for: .highlighted)
+        shopButton.setTitleColor(.white, for: .normal)
+        shopButton.setTitleColor(.lightGray, for: .highlighted)
+        shopButton.backgroundColor = .accent
+        shopButton.clipsToBounds = true
+        shopButton.layer.cornerRadius = 9
+    }
+    
     private func configureConstraints() {
         addSubview(emptyBasketButton)
         addSubview(textLabel)
         addSubview(messageLabel)
+        addSubview(shopButton)
+        
         emptyBasketButton.snp.makeConstraints {
             $0.center.equalTo(self.snp.center)
         }
@@ -72,10 +89,18 @@ class EmptyBasketView: UIView {
             $0.leading.equalToSuperview().offset(5)
             $0.trailing.equalToSuperview().offset(-5)
         }
+        
+        shopButton.snp.makeConstraints {
+            $0.top.equalTo(messageLabel.snp.bottom).offset(16)
+            $0.centerX.equalTo(snp.centerX)
+            $0.width.equalTo(200)
+            $0.height.equalTo(44)
+        }
     }
     
     private func setupObservers() {
         bindEmptyBasketButtonImageView()
+        bindShopButton()
     }
     
     private func bindEmptyBasketButtonImageView() {
@@ -83,7 +108,16 @@ class EmptyBasketView: UIView {
             .rx
             .tap
             .bind { [weak self] in
-                print("WRC emptyBasketButton tapped")
+                self?.onTapClosure?()
+            }
+            .disposed(by: disposeBag)
+    }
+    
+    private func bindShopButton() {
+        shopButton
+            .rx
+            .tap
+            .bind { [weak self] in
                 self?.onTapClosure?()
             }
             .disposed(by: disposeBag)

@@ -65,7 +65,7 @@ class BasketView: UIView {
     }
     
     private func configurePayButton() {
-        summaryButton = UIButton(type: .system)
+        summaryButton = .init(type: .system)
         summaryButton.setTitle("Przejdź do podsumowania", for: .normal)
         summaryButton.setTitle("Przejdź do podsumowania", for: .highlighted)
         summaryButton.setTitleColor(.white, for: .normal)
@@ -135,7 +135,6 @@ class BasketView: UIView {
             .itemDeleted
             .map(\.row)
             .bind { [weak self] row in
-                print("WRC row: \(row)")
                 self?.viewModel.removeItem(for: row)
             }
             .disposed(by: viewModel.disposeBag)
@@ -146,7 +145,6 @@ class BasketView: UIView {
             .rx
             .tap
             .bind { [weak self] in
-                print("WRC payButton tapped")
                 self?.payButtonEvent.onNext(true)
             }
             .disposed(by: viewModel.disposeBag)
