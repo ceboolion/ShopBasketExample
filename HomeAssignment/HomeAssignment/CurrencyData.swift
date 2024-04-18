@@ -1,10 +1,3 @@
-//
-//  CurrencyData.swift
-//  HomeAssignment
-//
-//  Created by Ceboolion on 15/04/2024.
-//
-
 import Foundation
 
 struct CurrencyData: Codable {
@@ -15,7 +8,8 @@ struct CurrencyData: Codable {
     
     func getCurrencyData() -> [CurrencyModel] {
         var data = [CurrencyModel]()
-        quotes.forEach { data.append(CurrencyModel(currency: $0.key, currencyData: $0.value)) }
+        quotes.forEach { data.append(CurrencyModel(currency: $0.key.replacingOccurrences(of: "USD", with: ""), 
+                                                   currencyData: $0.value)) }
         return data
     }
 }

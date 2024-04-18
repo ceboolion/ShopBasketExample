@@ -7,7 +7,7 @@ class BasketView: UIView {
     private(set) var tableView: UITableView!
     private var emptyBasketView: EmptyBasketView!
     private var basketSummaryView: BasketSummaryView!
-    private var payButton: UIButton!
+    private var summaryButton: UIButton!
     private(set) var viewModel: BasketViewModel!
     
     //MARK: - PUBLIC PROPERTIES
@@ -33,7 +33,7 @@ class BasketView: UIView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        payButton.layer.cornerRadius = payButton.bounds.height / 5
+        summaryButton.layer.cornerRadius = summaryButton.bounds.height / 5
     }
     
     //MARK: - PRIVATE METHODS
@@ -65,18 +65,18 @@ class BasketView: UIView {
     }
     
     private func configurePayButton() {
-        payButton = UIButton(type: .system)
-        payButton.setTitle("Zapłać", for: .normal)
-        payButton.setTitle("Zapłać", for: .highlighted)
-        payButton.setTitleColor(.white, for: .normal)
-        payButton.setTitleColor(.lightGray, for: .highlighted)
-        payButton.backgroundColor = .accent
+        summaryButton = UIButton(type: .system)
+        summaryButton.setTitle("Przejdź do podsumowania", for: .normal)
+        summaryButton.setTitle("Przejdź do podsumowania", for: .highlighted)
+        summaryButton.setTitleColor(.white, for: .normal)
+        summaryButton.setTitleColor(.lightGray, for: .highlighted)
+        summaryButton.backgroundColor = .accent
     }
     
     private func configureConstraints() {
         addSubview(tableView)
         addSubview(basketSummaryView)
-        addSubview(payButton)
+        addSubview(summaryButton)
         addSubview(emptyBasketView)
         
         tableView.snp.makeConstraints {
@@ -89,12 +89,12 @@ class BasketView: UIView {
             $0.trailing.equalTo(-5)
         }
         
-        payButton.snp.makeConstraints {
+        summaryButton.snp.makeConstraints {
             $0.top.equalTo(basketSummaryView.snp.bottom).offset(15)
+            $0.leading.equalToSuperview().offset(16)
+            $0.trailing.equalToSuperview().offset(-16)
             $0.bottom.equalTo(self.snp.bottom).offset(-10)
-            $0.centerX.equalTo(basketSummaryView.snp.centerX)
-            $0.height.equalTo(40)
-            $0.width.equalTo(UIScreen.main.bounds.width * 0.6)
+            $0.height.equalTo(44)
         }
         
         emptyBasketView.snp.makeConstraints {
@@ -114,7 +114,7 @@ class BasketView: UIView {
             .bind { [weak self] data in
                 self?.emptyBasketView.isHidden = data.isEmpty ? false : true
                 self?.basketSummaryView.isHidden = data.isEmpty ? true : false
-                self?.payButton.isHidden = data.isEmpty ? true : false
+                self?.summaryButton.isHidden = data.isEmpty ? true : false
             }
             .disposed(by: viewModel.disposeBag)
     }
@@ -142,7 +142,7 @@ class BasketView: UIView {
     }
     
     private func bindPayButton() {
-        payButton
+        summaryButton
             .rx
             .tap
             .bind { [weak self] in

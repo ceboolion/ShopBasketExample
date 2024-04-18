@@ -34,11 +34,6 @@ class ProductViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func prepareForReuse() {
-        disposeBag = DisposeBag()
-        super.prepareForReuse()
-    }
-    
     //MARK: - OVERRIDDEN METHODS
     override func layoutSubviews() {
         super.layoutSubviews()

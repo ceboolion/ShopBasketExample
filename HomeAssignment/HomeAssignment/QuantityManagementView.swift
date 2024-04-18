@@ -8,21 +8,12 @@ class QuantityManagementView: UIView {
     var onButtonTap: ((BasketUpdateType) -> Void)?
     
     //MARK: - PRIVATE PROPERTIES
-//    private var productData: ProductModel?
     private var productData: BasketProductsModel?
     private var minusButton: CustomButton!
     private(set) var buyQuantityLabel: UILabel!
     private var plusButton: CustomButton!
     private var stackView: UIStackView!
     private let disposeBag = DisposeBag()
-    
-//    // MARK: - INIT
-//    init(productData: ProductModel?) {
-//        self.productData = productData
-//        super.init(frame: .zero)
-//        setupUI()
-//        setupObservers()
-//    }
     
     //MARK: - OVERRIDDEN METHODS
     override init(frame: CGRect) {
@@ -36,10 +27,6 @@ class QuantityManagementView: UIView {
     }
     
     //MARK: - PUBLIC METHODS
-//    func setupData(with data: ProductModel) {
-//        productData = data
-//        setBuyQuantityLabelText(with: data)
-//    }
     func setupData(with data: BasketProductsModel) {
         productData = data
         setBuyQuantityLabelText(with: data)

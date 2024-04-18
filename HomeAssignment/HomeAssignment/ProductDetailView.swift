@@ -13,16 +13,16 @@ class ProductDetailView: UIView {
     //MARK: - PRIVATE PROPERTIES
     private var imageView: UIImageView!
     private var textLabel: UILabel!
-    private var quantityLabel: UILabel!
-    private var buyButton: UIButton!
+    private var descriptionLabel: UILabel!
     private var stackView: UIStackView!
+    private let padding: CGFloat = 12
+    private let imageHeight: CGFloat = 350
     private let disposeBag = DisposeBag()
     
     // MARK: - INIT
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupUI()
-        setupObservables()
     }
     
     required init?(coder: NSCoder) {
@@ -31,81 +31,72 @@ class ProductDetailView: UIView {
     
     //MARK: - PUBLIC METHODS
     func configureView(with model: ProductModel) {
-        configureImageView(with: model.product.image)
-        configureTextLabel(with: model.product.productTitle)
-        configureQuantityLabel(from: model)
-        configureBuyButton()
+        setImageView(image: model.product.image)
+        setTextLabelText(with: model.product.productTitle)
+        setDescriptionLabel(text: model.product.description)
     }
     
     //MARK: - PRIVATE METHODS
     private func setupUI() {
         backgroundColor = .systemBackground
-        imageView = UIImageView()
-        textLabel = UILabel()
-        quantityLabel = UILabel()
-        buyButton = UIButton(type: .system)
-        stackView = UIStackView()
+        configureImageView()
+        configureTextLabel()
+        configureDescriptionLabel()
         configureStackView()
         setupConstraints()
     }
     
-    private func configureImageView(with image: ImageResource) {
-        imageView.image = UIImage(resource: image)
+    private func configureImageView() {
+        imageView = .init()
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
     }
+
+    private func configureTextLabel() {
+        textLabel = .init()
+        textLabel.font = .systemFont(ofSize: 16, weight: .bold)
+    }
     
-    private func configureTextLabel(with text: String) {
+    private func setImageView(image: ImageResource) {
+        imageView.image = UIImage(resource: image)
+    }
+    
+    private func setTextLabelText(with text: String) {
         textLabel.text = text
     }
     
-    private func configureQuantityLabel(from model: ProductModel) {
-        var text = ""
-        if model.unitOfMeasure == .dozen {
-            text = "Dostępne: \(model.itemsAvailable / 12) \(model.getItemsQuantity())"
-        } else {
-            text = "Dostępne: \(model.itemsAvailable) \(model.getItemsQuantity())"
-        }
-        quantityLabel.text = text
+    private func configureDescriptionLabel() {
+        descriptionLabel = .init()
+        descriptionLabel.font = .systemFont(ofSize: 14, weight: .regular)
+        descriptionLabel.lineBreakMode = .byWordWrapping
+        descriptionLabel.numberOfLines = 0
+        descriptionLabel.sizeToFit()
     }
     
-    private func configureBuyButton() {
-        buyButton.setTitle("Dodaj do koszyka", for: .normal)
-        buyButton.setTitle("Dodaj do koszyka", for: .highlighted)
+    private func setDescriptionLabel(text: String) {
+        descriptionLabel.text = text
     }
     
     private func configureStackView() {
+        stackView = .init()
         stackView.axis = .vertical
         stackView.spacing = 5
         stackView.alignment = .leading
         stackView.distribution = .fill
-        stackView.addSubviews(views: imageView, textLabel, quantityLabel, buyButton, UIView())
+        stackView.addSubviews(views: imageView, textLabel, descriptionLabel, /*buyButton, */UIView())
     }
     
     private func setupConstraints() {
         addSubview(stackView)
         stackView.snp.makeConstraints {
-            $0.edges.equalToSuperview().offset(12)
+            $0.top.leading.equalTo(padding)
+            $0.bottom.trailing.equalTo(-padding)
         }
         
         imageView.snp.makeConstraints {
-            $0.height.equalTo(400)
+            $0.height.equalTo(imageHeight)
         }
     }
     
-    //MARK: - RX
-    private func setupObservables() {
-        bindBuyButton()
-    }
-    
-    private func bindBuyButton() {
-        buyButton
-            .rx
-            .tap
-            .bind { [weak self] in
-                print("WRC bindBuyButton tapped")
-            }
-            .disposed(by: disposeBag)
-    }
 
 }

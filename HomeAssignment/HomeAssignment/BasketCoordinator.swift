@@ -30,7 +30,7 @@ final class BasketCoordinator: NSObject, Coordinator {
         controller.didSendEventClosure = { [weak self] event in
             switch event {
             case .showPayView:
-                self?.showPayView()
+                self?.showCheckoutView()
             case .showStartTab:
                 self?.showStartTab()
             }
@@ -39,10 +39,21 @@ final class BasketCoordinator: NSObject, Coordinator {
     }
     
     //MARK: - PRIVATE METHODS
-    private func showPayView() {
-        let controller = UIViewController()
-        controller.view.backgroundColor = .systemBackground
-        navigationController.pushViewController(controller, animated: true)
+    private func showCheckoutView() {
+        let networkingService = NetworkingService()
+        let viewModel = CheckoutViewModel(networkingService: networkingService)
+        let controller = CheckoutViewController(checkoutView: CheckoutView(viewModel: viewModel))
+        controller.modalPresentationStyle = .fullScreen
+        controller.showAlertClosure = { [weak self] in
+            self?.showCompletionAlert()
+        }
+        navigationController.present(controller, animated: true)
+    }
+    
+    private func showCompletionAlert() {
+        let ac = UIAlertController(title: "Udało się!", message: "Płatność ukończona sukcesem", preferredStyle: .alert)
+        ac.addAction(UIAlertAction(title: "Ok", style: .default))
+        navigationController.topViewController?.present(ac, animated: true)
     }
     
     private func showStartTab() {
