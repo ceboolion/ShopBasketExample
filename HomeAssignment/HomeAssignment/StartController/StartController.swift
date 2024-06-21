@@ -13,10 +13,7 @@ class StartController: UIViewController {
     //MARK: - LIFECYCLE
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Start"
-        navigationItem.title = "Zrób super zakupy"
-        navigationController?.navigationBar.prefersLargeTitles = false
-        setup()
+        setupUI()
     }
 
     init(viewModel: StartViewModel) {
@@ -30,7 +27,10 @@ class StartController: UIViewController {
     }
     
     //MARK: - PRIVATE METHODS
-    private func setup() {
+    private func setupUI() {
+        title = "Start"
+        navigationItem.title = "Zrób super zakupy"
+        navigationController?.navigationBar.prefersLargeTitles = false
         configureConstraints()
     }
     

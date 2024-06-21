@@ -31,9 +31,10 @@ final class CheckoutViewModel {
     private func getCurrenciesData() {
         networkingService?.fetchCurrencyData()
             .subscribe(onNext: { [weak self] data in
-                var currencyData = data.getCurrencyData()
-                currencyData.insert(CurrencyModel(currency: "USD", currencyData: 1), at: 0)
-                self?.currencyData = currencyData
+                self?.currencyData = data.getCurrencyData()
+//                var currencyData = data.getCurrencyData()
+//                currencyData.insert(CurrencyModel(currency: "USD", currencyData: 1), at: 0)
+//                self?.currencyData = currencyData
             }, onError: { error in
                 print("Error: \(error)")
             })

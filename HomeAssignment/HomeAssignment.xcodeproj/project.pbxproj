@@ -167,15 +167,162 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		0829665B2BCD3BE500719038 /* Networking */ = {
+		0829665E2BCD3EA600719038 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				0820064F2BCD246F0036364A /* ProductDetailsViewController.swift */,
+				0829665F2BCD3EC300719038 /* ProductDetailView.swift */,
+			);
+			name = Views;
+			path = ..;
+			sourceTree = "<group>";
+		};
+		084104E22BCFE6C900753ECE /* BasketSummaryView */ = {
+			isa = PBXGroup;
+			children = (
+				084104E02BCFE50100753ECE /* BasketSummaryView.swift */,
+				086E9A8E2C25DE1600D4B8F2 /* Enums */,
+				086E9A8F2C25DE2300D4B8F2 /* SubViews */,
+			);
+			name = BasketSummaryView;
+			path = ..;
+			sourceTree = "<group>";
+		};
+		084104F62BD0FF1000753ECE /* Checkout */ = {
+			isa = PBXGroup;
+			children = (
+				086E9A852C25DD4E00D4B8F2 /* Views */,
+				086E9A822C25DD1700D4B8F2 /* Cells */,
+				086E9A812C25DD0500D4B8F2 /* ViewModels */,
+				084104F82BD0FF6000753ECE /* CheckoutViewController.swift */,
+			);
+			name = Checkout;
+			path = ..;
+			sourceTree = "<group>";
+		};
+		086E9A7C2C25DC8A00D4B8F2 /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+				08B528992BCC626A0015B713 /* Base */,
+				08B5289C2BCC63950015B713 /* Main */,
+			);
+			path = Coordinator;
+			sourceTree = "<group>";
+		};
+		086E9A7D2C25DCA800D4B8F2 /* Exrtensions */ = {
+			isa = PBXGroup;
+			children = (
+				08B4D86C2BCE934700A6B1D0 /* Double+Ext.swift */,
+				0820064B2BCD06E30036364A /* UIStackView+Ext.swift */,
+				08B528AD2BCC6B630015B713 /* UITabBarController+Ext.swift */,
+				08B528B62BCC70970015B713 /* UITablveViewCell+Ext.swift */,
+			);
+			path = Exrtensions;
+			sourceTree = "<group>";
+		};
+		086E9A7E2C25DCC300D4B8F2 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				084104EF2BD040BA00753ECE /* BasketManager.swift */,
+			);
+			path = Managers;
+			sourceTree = "<group>";
+		};
+		086E9A7F2C25DCDA00D4B8F2 /* Networking */ = {
 			isa = PBXGroup;
 			children = (
 				082966652BCD98C700719038 /* NetworkingService.swift */,
 			);
-			name = Networking;
+			path = Networking;
 			sourceTree = "<group>";
 		};
-		0829665C2BCD3E7700719038 /* StartController */ = {
+		086E9A802C25DCF300D4B8F2 /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				084104F62BD0FF1000753ECE /* Checkout */,
+				088E0B8B2BCEED650013D7A0 /* CustomViews */,
+				08B528A22BCC66C80015B713 /* Basket */,
+				08B528A12BCC66BF0015B713 /* Start */,
+			);
+			path = Presentation;
+			sourceTree = "<group>";
+		};
+		086E9A812C25DD0500D4B8F2 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				084104FE2BD106A800753ECE /* CheckoutViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		086E9A822C25DD1700D4B8F2 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				084104FB2BD1046F00753ECE /* CheckoutViewCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		086E9A852C25DD4E00D4B8F2 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				084104F42BD0FC1800753ECE /* CheckoutView.swift */,
+				084105002BD1199D00753ECE /* CheckoutSummaryView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		086E9A872C25DD7100D4B8F2 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				08A5898E2BCDAC980046CB40 /* BasketTableViewCell.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		086E9A892C25DDCA00D4B8F2 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				0847387F2BCEA3570018C162 /* BasketViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		086E9A8C2C25DDEC00D4B8F2 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				084104E22BCFE6C900753ECE /* BasketSummaryView */,
+				08B4D8662BCE59D400A6B1D0 /* BasketView.swift */,
+				084738812BCEA56D0018C162 /* EmptyBasketView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		086E9A8E2C25DE1600D4B8F2 /* Enums */ = {
+			isa = PBXGroup;
+			children = (
+				084104E72BCFEA2000753ECE /* BasketRowViewType.swift */,
+			);
+			path = Enums;
+			sourceTree = "<group>";
+		};
+		086E9A8F2C25DE2300D4B8F2 /* SubViews */ = {
+			isa = PBXGroup;
+			children = (
+				084104E42BCFE72C00753ECE /* BasketSummaryRowView.swift */,
+			);
+			path = SubViews;
+			sourceTree = "<group>";
+		};
+		086E9A902C25DE5C00D4B8F2 /* ProductDetailController */ = {
+			isa = PBXGroup;
+			children = (
+				0829665E2BCD3EA600719038 /* Views */,
+			);
+			path = ProductDetailController;
+			sourceTree = "<group>";
+		};
+		086E9A912C25DE8200D4B8F2 /* StartController */ = {
 			isa = PBXGroup;
 			children = (
 				08B528B32BCC6FDB0015B713 /* Cells */,
@@ -185,102 +332,31 @@
 				08B528AF2BCC6EA80015B713 /* Views */,
 				08745B642BCC5AB00054F9CB /* StartController.swift */,
 			);
-			name = StartController;
+			path = StartController;
 			sourceTree = "<group>";
 		};
-		0829665D2BCD3E8700719038 /* ProductDetailController */ = {
+		086E9A922C25DEA500D4B8F2 /* Singletons */ = {
 			isa = PBXGroup;
 			children = (
-				0829665E2BCD3EA600719038 /* Views */,
-				0820064F2BCD246F0036364A /* ProductDetailsViewController.swift */,
+				08B4D8682BCE683300A6B1D0 /* Basket */,
 			);
-			name = ProductDetailController;
+			path = Singletons;
 			sourceTree = "<group>";
 		};
-		0829665E2BCD3EA600719038 /* Views */ = {
+		086E9A932C25DEBD00D4B8F2 /* Enum */ = {
 			isa = PBXGroup;
 			children = (
-				0829665F2BCD3EC300719038 /* ProductDetailView.swift */,
+				08B4D86F2BCE9A7700A6B1D0 /* BasketUpdateType.swift */,
 			);
-			name = Views;
+			path = Enum;
 			sourceTree = "<group>";
 		};
-		084104E22BCFE6C900753ECE /* BasketSummaryView */ = {
+		086E9A942C25DED500D4B8F2 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				084104E62BCFEA0E00753ECE /* Enums */,
-				084104E32BCFE6D600753ECE /* SubViews */,
-				084104E02BCFE50100753ECE /* BasketSummaryView.swift */,
+				08B4D86A2BCE685400A6B1D0 /* BasketProductsModel.swift */,
 			);
-			name = BasketSummaryView;
-			sourceTree = "<group>";
-		};
-		084104E32BCFE6D600753ECE /* SubViews */ = {
-			isa = PBXGroup;
-			children = (
-				084104E42BCFE72C00753ECE /* BasketSummaryRowView.swift */,
-			);
-			name = SubViews;
-			sourceTree = "<group>";
-		};
-		084104E62BCFEA0E00753ECE /* Enums */ = {
-			isa = PBXGroup;
-			children = (
-				084104E72BCFEA2000753ECE /* BasketRowViewType.swift */,
-			);
-			name = Enums;
-			sourceTree = "<group>";
-		};
-		084104EE2BD0404100753ECE /* Managers */ = {
-			isa = PBXGroup;
-			children = (
-				084104EF2BD040BA00753ECE /* BasketManager.swift */,
-			);
-			name = Managers;
-			sourceTree = "<group>";
-		};
-		084104F62BD0FF1000753ECE /* Checkout */ = {
-			isa = PBXGroup;
-			children = (
-				084104FD2BD1069500753ECE /* ViewModels */,
-				084104FA2BD1045900753ECE /* Cells */,
-				084104F72BD0FF1F00753ECE /* Views */,
-				084104F82BD0FF6000753ECE /* CheckoutViewController.swift */,
-			);
-			name = Checkout;
-			sourceTree = "<group>";
-		};
-		084104F72BD0FF1F00753ECE /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				084104F42BD0FC1800753ECE /* CheckoutView.swift */,
-				084105002BD1199D00753ECE /* CheckoutSummaryView.swift */,
-			);
-			name = Views;
-			sourceTree = "<group>";
-		};
-		084104FA2BD1045900753ECE /* Cells */ = {
-			isa = PBXGroup;
-			children = (
-				084104FB2BD1046F00753ECE /* CheckoutViewCell.swift */,
-			);
-			name = Cells;
-			sourceTree = "<group>";
-		};
-		084104FD2BD1069500753ECE /* ViewModels */ = {
-			isa = PBXGroup;
-			children = (
-				084104FE2BD106A800753ECE /* CheckoutViewModel.swift */,
-			);
-			name = ViewModels;
-			sourceTree = "<group>";
-		};
-		0847387E2BCEA3480018C162 /* ViewModel */ = {
-			isa = PBXGroup;
-			children = (
-				0847387F2BCEA3570018C162 /* BasketViewModel.swift */,
-			);
-			name = ViewModel;
+			path = Model;
 			sourceTree = "<group>";
 		};
 		08745B542BCC5AB00054F9CB = {
@@ -308,13 +384,13 @@
 		08745B5F2BCC5AB00054F9CB /* HomeAssignment */ = {
 			isa = PBXGroup;
 			children = (
-				08B528982BCC62510015B713 /* Coordinator */,
-				08B528AC2BCC6B4A0015B713 /* Extensions */,
-				084104EE2BD0404100753ECE /* Managers */,
-				0829665B2BCD3BE500719038 /* Networking */,
-				08B528972BCC610C0015B713 /* Presentation */,
+				086E9A7C2C25DC8A00D4B8F2 /* Coordinator */,
+				086E9A7D2C25DCA800D4B8F2 /* Exrtensions */,
+				086E9A7E2C25DCC300D4B8F2 /* Managers */,
+				086E9A7F2C25DCDA00D4B8F2 /* Networking */,
+				086E9A802C25DCF300D4B8F2 /* Presentation */,
 				08745B902BCC5AFE0054F9CB /* Resources */,
-				08A5898A2BCDABB70046CB40 /* Singletons */,
+				086E9A922C25DEA500D4B8F2 /* Singletons */,
 			);
 			path = HomeAssignment;
 			sourceTree = "<group>";
@@ -363,78 +439,18 @@
 				084104E92BD0037300753ECE /* CustomButton.swift */,
 			);
 			name = CustomViews;
-			sourceTree = "<group>";
-		};
-		08A5898A2BCDABB70046CB40 /* Singletons */ = {
-			isa = PBXGroup;
-			children = (
-				08B4D8682BCE683300A6B1D0 /* Basket */,
-			);
-			name = Singletons;
-			sourceTree = "<group>";
-		};
-		08A5898D2BCDAC7E0046CB40 /* Cells */ = {
-			isa = PBXGroup;
-			children = (
-				08A5898E2BCDAC980046CB40 /* BasketTableViewCell.swift */,
-			);
-			name = Cells;
-			sourceTree = "<group>";
-		};
-		08B4D8652BCE59AB00A6B1D0 /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				084104E22BCFE6C900753ECE /* BasketSummaryView */,
-				08B4D8662BCE59D400A6B1D0 /* BasketView.swift */,
-				084738812BCEA56D0018C162 /* EmptyBasketView.swift */,
-			);
-			name = Views;
+			path = ..;
 			sourceTree = "<group>";
 		};
 		08B4D8682BCE683300A6B1D0 /* Basket */ = {
 			isa = PBXGroup;
 			children = (
-				08B4D86E2BCE9A5F00A6B1D0 /* Enums */,
-				08B4D8692BCE683E00A6B1D0 /* Models */,
+				086E9A942C25DED500D4B8F2 /* Model */,
+				086E9A932C25DEBD00D4B8F2 /* Enum */,
 				08A5898B2BCDABD10046CB40 /* ShoppingBasket.swift */,
 			);
 			name = Basket;
-			sourceTree = "<group>";
-		};
-		08B4D8692BCE683E00A6B1D0 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				08B4D86A2BCE685400A6B1D0 /* BasketProductsModel.swift */,
-			);
-			name = Models;
-			sourceTree = "<group>";
-		};
-		08B4D86E2BCE9A5F00A6B1D0 /* Enums */ = {
-			isa = PBXGroup;
-			children = (
-				08B4D86F2BCE9A7700A6B1D0 /* BasketUpdateType.swift */,
-			);
-			name = Enums;
-			sourceTree = "<group>";
-		};
-		08B528972BCC610C0015B713 /* Presentation */ = {
-			isa = PBXGroup;
-			children = (
-				084104F62BD0FF1000753ECE /* Checkout */,
-				088E0B8B2BCEED650013D7A0 /* CustomViews */,
-				08B528A22BCC66C80015B713 /* Basket */,
-				08B528A12BCC66BF0015B713 /* Start */,
-			);
-			name = Presentation;
-			sourceTree = "<group>";
-		};
-		08B528982BCC62510015B713 /* Coordinator */ = {
-			isa = PBXGroup;
-			children = (
-				08B528992BCC626A0015B713 /* Base */,
-				08B5289C2BCC63950015B713 /* Main */,
-			);
-			name = Coordinator;
+			path = ..;
 			sourceTree = "<group>";
 		};
 		08B528992BCC626A0015B713 /* Base */ = {
@@ -443,6 +459,7 @@
 				08B5289A2BCC62740015B713 /* Coordinator.swift */,
 			);
 			name = Base;
+			path = ..;
 			sourceTree = "<group>";
 		};
 		08B5289C2BCC63950015B713 /* Main */ = {
@@ -454,26 +471,29 @@
 				08B528AA2BCC6AB10015B713 /* MainCoordinator+TabBarCreation.swift */,
 			);
 			name = Main;
+			path = ..;
 			sourceTree = "<group>";
 		};
 		08B528A12BCC66BF0015B713 /* Start */ = {
 			isa = PBXGroup;
 			children = (
-				0829665D2BCD3E8700719038 /* ProductDetailController */,
-				0829665C2BCD3E7700719038 /* StartController */,
+				086E9A912C25DE8200D4B8F2 /* StartController */,
+				086E9A902C25DE5C00D4B8F2 /* ProductDetailController */,
 			);
 			name = Start;
+			path = ..;
 			sourceTree = "<group>";
 		};
 		08B528A22BCC66C80015B713 /* Basket */ = {
 			isa = PBXGroup;
 			children = (
-				08A5898D2BCDAC7E0046CB40 /* Cells */,
-				0847387E2BCEA3480018C162 /* ViewModel */,
-				08B4D8652BCE59AB00A6B1D0 /* Views */,
+				086E9A8C2C25DDEC00D4B8F2 /* View */,
+				086E9A892C25DDCA00D4B8F2 /* ViewModel */,
+				086E9A872C25DD7100D4B8F2 /* Cell */,
 				08B528A32BCC66ED0015B713 /* BasketController.swift */,
 			);
 			name = Basket;
+			path = ..;
 			sourceTree = "<group>";
 		};
 		08B528A52BCC672D0015B713 /* MainTabCoordinators */ = {
@@ -485,23 +505,13 @@
 			name = MainTabCoordinators;
 			sourceTree = "<group>";
 		};
-		08B528AC2BCC6B4A0015B713 /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
-				08B4D86C2BCE934700A6B1D0 /* Double+Ext.swift */,
-				0820064B2BCD06E30036364A /* UIStackView+Ext.swift */,
-				08B528AD2BCC6B630015B713 /* UITabBarController+Ext.swift */,
-				08B528B62BCC70970015B713 /* UITablveViewCell+Ext.swift */,
-			);
-			name = Extensions;
-			sourceTree = "<group>";
-		};
 		08B528AF2BCC6EA80015B713 /* Views */ = {
 			isa = PBXGroup;
 			children = (
 				082966632BCD97CB00719038 /* ProductListView.swift */,
 			);
 			name = Views;
+			path = ..;
 			sourceTree = "<group>";
 		};
 		08B528B02BCC6EE60015B713 /* StartViewModel */ = {
@@ -510,6 +520,7 @@
 				08B528B12BCC6EFA0015B713 /* StartViewModel.swift */,
 			);
 			name = StartViewModel;
+			path = ..;
 			sourceTree = "<group>";
 		};
 		08B528B32BCC6FDB0015B713 /* Cells */ = {
@@ -518,6 +529,7 @@
 				08B528B42BCC6FFA0015B713 /* ProductViewCell.swift */,
 			);
 			name = Cells;
+			path = ..;
 			sourceTree = "<group>";
 		};
 		08B528B82BCC72D00015B713 /* Enums */ = {
@@ -527,6 +539,7 @@
 				0820064D2BCD0E430036364A /* UnitsOfMeasure.swift */,
 			);
 			name = Enums;
+			path = ..;
 			sourceTree = "<group>";
 		};
 		08B528BB2BCC7D8D0015B713 /* Models */ = {
@@ -536,6 +549,7 @@
 				082966592BCD374E00719038 /* CurrencyData.swift */,
 			);
 			name = Models;
+			path = ..;
 			sourceTree = "<group>";
 		};
 		09ECB1ED9E1EBDDA883EA5F1 /* Pods */ = {
@@ -1024,6 +1038,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1058,6 +1073,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

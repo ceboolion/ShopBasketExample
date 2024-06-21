@@ -101,7 +101,7 @@ class ProductViewCell: UITableViewCell {
         productQuantityStackView.axis = .horizontal
         productQuantityStackView.alignment = .center
         productQuantityStackView.spacing = 6
-        productQuantityStackView.addSubviews(views: addProductButton, UIView()/*, quantityManagementView*/)
+        productQuantityStackView.addSubviews(views: addProductButton, UIView())
     }
     
     private func configureStackView() {
